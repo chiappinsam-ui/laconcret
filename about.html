@@ -129,8 +129,17 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .brand-wrapper { font-size: 15vw; }
-            .cursive-text { font-size: 8vw; }
+            .brand-wrapper { 
+                font-size: 10.5vw; /* Scaled down from 15vw so "CONCRETE'S" fits perfectly */
+                justify-content: center;
+                width: 100%;
+            }
+            .cursive-text { 
+                font-size: 10vw; 
+            }
+            .services-text {
+                font-size: 9vw;
+            }
         }
         body {
             background-color: #050505;
@@ -146,7 +155,6 @@
             top: 0.5rem;
             left: 0;
             width: 100%;
-            display: flex;
             justify-content: center;
             z-index: 1000;
             padding: 0 1rem;
@@ -208,10 +216,6 @@
             background: #ff4d00;
             color: white;
         }
-        @media (max-width: 900px) {
-            #pill-nav-container { display: none; }
-        }
-
         /* ==========================================================================
            SKINNY BOTTOM FOOTER (Matches Site)
            ========================================================================== */
@@ -250,6 +254,35 @@
         .hero-card-gradient {
             background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 100%);
         }
+        /* ==========================================================================
+           MOBILE MENU ANIMATIONS & SCREEN LOCK
+           ========================================================================== */
+        /* Locks the screen from scrolling when menu is open */
+        body.menu-open {
+            overflow: hidden !important;
+            touch-action: none;
+        }
+
+        /* Animates the Burger into an X */
+        #hamburger-btn.is-active span:nth-child(1) {
+            transform: translateY(3.5px) rotate(45deg);
+        }
+        #hamburger-btn.is-active span:nth-child(2) {
+            transform: translateY(-3.5px) rotate(-45deg);
+            width: 1.75rem !important; /* Stretches the short line to match */
+        }
+
+        /* Fades in the Glass Overlay */
+        #mobile-menu-overlay.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Slides the links up beautifully */
+        #mobile-menu-overlay.is-active .mobile-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -267,26 +300,46 @@
         </div>
     </div>
 
-<nav id="pill-nav-container">
-    <div class="pill-nav-bar">
-        
-        <a href="index.html" class="nav-logo">
-            LA <span style="color: #ff4d00;">CONCRETE</span>
+<nav id="pill-nav-container" class="hidden md:flex fixed top-2 left-0 w-full justify-center z-[1000] pointer-events-none px-4">
+    <div class="pill-nav-bar pointer-events-auto bg-black/90 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-8 border border-white/10 shadow-xl">
+        <a href="index.html" class="nav-logo font-[Kanit] font-black text-white text-lg tracking-wide">
+            LA <span class="text-concrete-orange">CONCRETE</span>
         </a>
-
-        <div class="nav-items-wrapper">
-            <a href="index.html" class="pill-link">Home</a>
-            <a href="services.html" class="pill-link">Services</a>
-            <a href="about.html" class="pill-link active">About</a>
-            <a href="contact.html" class="pill-link">Contact</a>
+        <div class="nav-items-wrapper flex items-center gap-2">
+            <a href="index.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Home</a>
+            <a href="services.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Services</a>
+            <a href="about.html" class="pill-link active font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">About</a>
+            <a href="contact.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Contact</a>
         </div>
-
-        <a href="contact.html" class="nav-quote-btn">
+        <a href="contact.html" class="nav-quote-btn bg-white text-black font-[Outfit] text-xs font-bold uppercase px-5 py-2.5 rounded-full hover:bg-concrete-orange hover:text-white transition-colors">
             Get Quote
         </a>
-        
     </div>
 </nav>
+
+<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-between items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl">
+    <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
+        LA <span class="text-concrete-orange">CONCRETE</span>
+    </a>
+    
+    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[5px] relative z-[1001] focus:outline-none">
+        <span class="w-7 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+        <span class="w-5 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+    </button>
+</div>
+
+<div id="mobile-menu-overlay" class="md:hidden fixed inset-0 bg-[#050505]/95 backdrop-blur-2xl z-[999] opacity-0 pointer-events-none transition-opacity duration-500 flex flex-col justify-center items-center">
+    <div class="flex flex-col items-center gap-8 text-center w-full px-6">
+        <a href="index.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-100 hover:text-concrete-orange">Home</a>
+        <a href="services.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-200 hover:text-concrete-orange">Services</a>
+        <a href="about.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-300 hover:text-concrete-orange">About</a>
+        <a href="contact.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-400 hover:text-concrete-orange">Contact</a>
+        
+        <a href="contact.html" class="mobile-link mt-6 bg-concrete-orange text-white font-[Outfit] font-bold uppercase tracking-widest text-sm px-10 py-4 rounded-full opacity-0 translate-y-8 transition-all duration-500 delay-500 hover:bg-white hover:text-black w-full max-w-xs">
+            Get Quote
+        </a>
+    </div>
+</div>
 
     <main>
         <section class="relative min-h-screen w-full flex flex-col justify-center items-center pt-24 pb-12 px-6 overflow-hidden">
@@ -464,6 +517,27 @@
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
+
+        // =========================================================================
+        // MOBILE MENU TOGGLE LOGIC
+        // =========================================================================
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+        if (hamburgerBtn && mobileMenuOverlay) {
+            hamburgerBtn.addEventListener('click', () => {
+                // Toggle the 'X' animation and show overlay
+                const isActive = hamburgerBtn.classList.toggle('is-active');
+                mobileMenuOverlay.classList.toggle('is-active');
+                
+                // Toggle screen lock to prevent background scrolling
+                if (isActive) {
+                    document.body.classList.add('menu-open');
+                } else {
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        }
     </script>
 </body>
 </html>
