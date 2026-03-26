@@ -173,16 +173,95 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
+            /* 1. Loader fixes: Fit screen perfectly without clipping */
             .brand-wrapper { 
-                font-size: 10.5vw; /* Scaled down from 15vw so "CONCRETE'S" fits perfectly */
-                justify-content: center;
-                width: 100%;
+                font-size: 9.5vw !important; /* Scaled down from 15vw */
+                white-space: nowrap !important;
             }
-            .cursive-text { 
-                font-size: 10vw; 
+            .cursive-text { font-size: 8vw !important; }
+            .services-text { font-size: 8vw !important; }
+
+            /* 2. Compact the 3D front cards (Stops them from stretching vertically) */
+            .tunnel-card {
+                width: 85vw !important;
+                height: 55vh !important; /* Compacted heavily from 80vh */
+                max-height: 500px !important;
+                border-radius: 16px !important;
             }
-            .services-text {
-                font-size: 9vw;
+            .tunnel-info {
+                padding: 1.5rem 1rem !important;
+            }
+            .tunnel-text-content h2 {
+                font-size: 2.25rem !important;
+            }
+            .tunnel-text-content p {
+                font-size: 0.85rem !important;
+                max-width: 100% !important;
+            }
+            
+            .scroll-indicator { display: none !important; }
+            #pill-nav-container { display: none !important; }
+
+            /* =======================================================
+               FOOTER COMPACTION (FORCE FIT TO SCREEN)
+               ======================================================= */
+            
+            /* 1. Strip the massive section padding */
+            #animated-footer {
+                padding-top: 5rem !important; 
+                padding-bottom: 2rem !important;
+            }
+            
+            /* 2. Kill the massive gap between the text and the cards */
+            #animated-footer > div.relative.z-20 {
+                gap: 1.5rem !important; 
+                margin-bottom: 0 !important; /* Removes the mb-24 */
+            }
+
+            /* 3. Compact the Text Section */
+            #animated-footer h2 {
+                font-size: 3.5rem !important; /* Shrinks BUILT TO LAST */
+                margin-bottom: 0.5rem !important;
+                line-height: 0.9 !important;
+            }
+            #animated-footer p.max-w-md {
+                font-size: 0.85rem !important;
+                margin-bottom: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            .footer-anim-left.inline-block {
+                margin-bottom: 1rem !important; /* Tighter badge margin */
+            }
+            .footer-contact-btn {
+                padding: 10px 24px !important; /* Slightly smaller button */
+                font-size: 0.75rem !important;
+            }
+
+            /* 4. Super Compact 2x2 Grid */
+            #animated-footer .grid.grid-cols-1 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 8px !important; /* Tighter spacing between cards */
+            }
+            .footer-stat-card {
+                padding: 1rem 0.5rem !important; /* Slashes card height */
+                border-radius: 12px !important;
+            }
+            .stat-number {
+                font-size: 1.75rem !important; 
+                margin-bottom: 0 !important; /* Kills bottom margin */
+            }
+            .footer-stat-card span:last-child {
+                font-size: 0.55rem !important;
+                letter-spacing: 0.05em !important;
+                margin-top: 4px !important;
+            }
+
+            /* 5. Compact the bottom Email/Phone row (Side-by-side) */
+            #animated-footer .border-t.border-white\/10 {
+                padding-top: 1rem !important;
+                gap: 1rem !important;
+                flex-direction: row !important; /* Forces side-by-side */
+                justify-content: space-between !important;
             }
         }
         body {
@@ -888,14 +967,53 @@
         }
         
 
+        /* ==========================================================================
+           MOBILE RESPONSIVE FIXES 
+           ========================================================================== */
+        @media (max-width: 1000px) {
+            /* Pushes the section down slightly so the first card isn't stuck under the navbar */
+            .horizontal-scroll-wrapper { 
+                height: auto; 
+                display: block; 
+                padding-top: 100px; 
+                padding-bottom: 40px; 
+            }
+            .horizontal-track { 
+                flex-direction: column; 
+                height: auto; 
+                padding-left: 5vw; 
+                padding-right: 5vw; 
+                gap: 30px; /* Space between stacked cards */
+            }
+            .h-panel { 
+                width: 100%; 
+                height: 75vh; /* Tablet height */
+                padding: 0; 
+                border-right: none; 
+                margin-bottom: 0; 
+            }
+            .panel-content { height: 100%; }
+        }
+
         @media (max-width: 768px) {
-            .horizontal-scroll-wrapper { height: auto; display: block; }
-            .horizontal-track { flex-direction: column; height: auto; padding: 50px 20px; gap: 40px; }
-            .h-panel { width: 100%; height: 80vh; padding: 0; }
-            .panel-content { height: 100%; border-radius: 20px; } /* Slightly smaller corners for mobile */
-            .panel-info { padding: 2rem; flex-direction: column; align-items: flex-start; gap: 20px; }
-            .tunnel-big-text { font-size: 26vw; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05); }
-            .tunnel-ring { width: 950px; height: 950px; }
+            /* Because this comes AFTER 1000px, it correctly applies to phones */
+            .h-panel { 
+                height: 65vh; /* Compact height to fit phone screens perfectly */
+            } 
+            .panel-text { 
+                padding: 1.5rem; 
+            }
+            .panel-text h3 { 
+                font-size: clamp(2.5rem, 8vw, 3.5rem); /* Scales title down nicely */
+            }
+            .panel-text p { 
+                font-size: 0.95rem; 
+            }
+            .panel-number { 
+                top: 1rem; 
+                right: 1rem; 
+                font-size: 3.5rem; /* Scales the '01', '02' down slightly */
+            }
         }
 
         /* =========================================
@@ -993,56 +1111,57 @@
         /* =========================================
            BULK UP & BOLD OVERRIDES (SIZE & VISIBILITY)
            ========================================= */
-        
-        /* 1. Make the cards significantly taller and more substantial */
-        .footer-stat-card {
-            padding: 4rem 2rem !important; /* Increases height massively */
-            border-width: 2px !important; /* Thicker glass edge for better definition */
-        }
+        @media (min-width: 769px) {
+            /* 1. Make the cards significantly taller and more substantial */
+            .footer-stat-card {
+                padding: 4rem 2rem !important; /* Increases height massively */
+                border-width: 2px !important; /* Thicker glass edge for better definition */
+            }
 
-        /* 2. Bold everything in Light Mode for maximum legibility */
-        
-        /* Massive, thick numbers */
-        body.light-mode .stat-number {
-            font-weight: 900 !important;
-            font-size: clamp(3rem, 4vw, 4.5rem) !important; /* Scales numbers up */
-        }
+            /* 2. Bold everything in Light Mode for maximum legibility */
+            
+            /* Massive, thick numbers */
+            body.light-mode .stat-number {
+                font-weight: 900 !important;
+                font-size: clamp(3rem, 4vw, 4.5rem) !important; /* Scales numbers up */
+            }
 
-        /* Card Labels */
-        body.light-mode .footer-stat-card span:last-child {
-            font-weight: 800 !important;
-            color: #111 !important; /* Much darker grey for contrast */
-            font-size: 0.95rem !important; /* Slightly larger */
-            letter-spacing: 0.2em !important;
-        }
+            /* Card Labels */
+            body.light-mode .footer-stat-card span:last-child {
+                font-weight: 800 !important;
+                color: #111 !important; /* Much darker grey for contrast */
+                font-size: 0.95rem !important; /* Slightly larger */
+                letter-spacing: 0.2em !important;
+            }
 
-        /* Main Paragraph Text */
-        body.light-mode .footer-anim-left p {
-            font-weight: 700 !important;
-            color: #111 !important;
-            font-size: 1.15rem !important;
-        }
+            /* Main Paragraph Text */
+            body.light-mode .footer-anim-left p {
+                font-weight: 700 !important;
+                color: #111 !important;
+                font-size: 1.15rem !important;
+            }
 
-        /* Bulkier Pill Button */
-        body.light-mode .footer-contact-btn {
-            font-weight: 800 !important;
-            padding: 18px 48px !important; /* Fatter button to match the bigger cards */
-            font-size: 1rem !important;
-            border-width: 2px !important; /* Thicker outline */
-        }
+            /* Bulkier Pill Button */
+            body.light-mode .footer-contact-btn {
+                font-weight: 800 !important;
+                padding: 18px 48px !important; /* Fatter button to match the bigger cards */
+                font-size: 1rem !important;
+                border-width: 2px !important; /* Thicker outline */
+            }
 
-        /* Bottom Grid Labels & Badges */
-        body.light-mode footer .text-white\/40, 
-        body.light-mode footer .text-white\/30,
-        body.light-mode footer .bg-white\/5 span {
-            font-weight: 800 !important;
-            color: #333 !important;
-        }
+            /* Bottom Grid Labels & Badges */
+            body.light-mode footer .text-white\/40, 
+            body.light-mode footer .text-white\/30,
+            body.light-mode footer .bg-white\/5 span {
+                font-weight: 800 !important;
+                color: #333 !important;
+            }
 
-        /* Bottom Email / Phone Links */
-        body.light-mode footer a.text-white {
-            font-weight: 900 !important;
-            font-size: 1.1rem !important;
+            /* Bottom Email / Phone Links */
+            body.light-mode footer a.text-white {
+                font-weight: 900 !important;
+                font-size: 1.1rem !important;
+            }
         }
 
         /* =========================================
@@ -1094,6 +1213,174 @@
         #mobile-menu-overlay.is-active .mobile-link {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* --- MOBILE 3D TUNNEL FALLBACK --- */
+        @media (max-width: 768px) {
+            /* Kills 3D perspective and stacks items normally */
+            .viewport { perspective: none !important; position: relative !important; height: auto !important; }
+            .world { transform-style: flat !important; position: relative !important; display: flex !important; flex-direction: column !important; gap: 2rem; padding: 4rem 1.5rem; }
+
+            /* Disables random rotation and positioning */
+            .tunnel-item { position: relative !important; top: auto !important; left: auto !important; transform: none !important; opacity: 1 !important; }
+
+            /* Hides the massive rings and background text on mobile */
+            .tunnel-ring, .tunnel-big-text { display: none !important; }
+
+            /* Resizes cards for mobile screens */
+            .tunnel-card { width: 100% !important; height: 50vh !important; max-height: 400px !important; transform: none !important; }
+        }
+ 
+        /* VARIABLES */
+        :root {
+            --c-orange: #FF4D00;
+            --c-text: #FFFFFF;
+            --c-bg: #050505;
+            --font-header: 'Kanit', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            margin: 0;
+            -webkit-font-smoothing: antialiased; /* Makes text look sharper */
+        }
+
+        /* --- LOADER --- */
+        .loader { position: fixed; inset: 0; background: #F0F0F0; z-index: 20000; display: flex; justify-content: center; align-items: center; color: black; }
+        .loader-logo { font-family: var(--font-header); font-size: 8vw; font-weight: 800; letter-spacing: -0.05em; overflow: hidden; display: flex; gap: 0.5em; }
+        .loader-logo span { display: block; transform: translateY(110%); }
+        .loader-logo .accent { color: var(--c-orange); }
+
+        /* --- LAYOUT --- */
+        nav { isolation: isolate; }
+
+        .services-container {
+            width: 100%;
+            position: relative;
+            padding-top: 20vh;
+            padding-bottom: 20vh;
+        }
+
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Spreads them out nicely */
+            gap: 5vw; /* Fluid gap instead of fixed px */
+            min-height: 80vh; /* Gives each section room to breathe */
+            width: 100%;
+            padding: 0 5vw;
+            margin-bottom: 10vh;
+            box-sizing: border-box;
+        }
+
+        /* ZIG-ZAG LOGIC */
+        .service-row:nth-child(even) { flex-direction: row-reverse; }
+
+        /* COLUMNS */
+        .text-col {
+            flex: 1; /* Takes available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* ORANGE ACCENT BARS */
+        .text-col {
+            padding-left: 2rem;
+            border-left: 6px solid var(--c-orange);
+        }
+
+        /* FLIP ACCENT FOR EVEN ROWS */
+        .service-row:nth-child(even) .text-col {
+            align-items: flex-end;
+            text-align: right;
+            padding-left: 0;
+            padding-right: 2rem;
+            border-left: none;
+            border-right: 6px solid var(--c-orange);
+        }
+
+        .img-col {
+            width: 45%; /* Slightly smaller image to let text dominate */
+            height: 65vh;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            /* Hardware acceleration for smoother animations */
+            will-change: transform;
+        }
+
+        /* IMAGE HOVER */
+        .service-row:hover .img-col {
+            border-color: var(--c-orange);
+            box-shadow: 0 20px 80px rgba(255, 77, 0, 0.1);
+        }
+
+        .img-wrapper { width: 100%; height: 120%; position: absolute; top: 0; left: 0; will-change: transform; }
+        .img-wrapper img, .img-wrapper video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) grayscale(0.2); transition: all 0.5s ease; }
+        .service-row:hover .img-wrapper img, .service-row:hover .img-wrapper video { filter: brightness(1) grayscale(0); }
+
+        /* --- TYPOGRAPHY (THE FIX) --- */
+
+        .num { display: none !important; }
+
+        h3 {
+            font-family: var(--font-header);
+            /* CLAMP: The magic. Minimum 3rem, Ideal 7vw (screen width based), Max 9rem */
+            font-size: clamp(3.5rem, 7vw, 9rem);
+            font-weight: 800;
+            line-height: 0.9; /* Tighter leading for headers */
+            text-transform: uppercase;
+            margin: 0 0 1.5rem 0;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        h3 span { color: var(--c-orange); }
+
+        p {
+            font-family: var(--font-body);
+            font-size: clamp(1.1rem, 1.5vw, 1.35rem); /* Responsive body text */
+            color: #cccccc;
+            max-width: 550px;
+            line-height: 1.5;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1024px) {
+            .service-row {
+                flex-direction: column-reverse !important;
+                gap: 2rem;
+                padding: 0 6vw;
+                margin-bottom: 150px;
+                height: auto;
+                min-height: auto;
+            }
+
+            .img-col { width: 100%; height: 50vh; }
+
+            .text-col {
+                width: 100%;
+                align-items: flex-start !important;
+                text-align: left !important;
+                border-right: none !important;
+                border-left: 6px solid var(--c-orange) !important;
+                padding-right: 0 !important;
+                padding-left: 1.5rem !important;
+            }
+
+            h3 { font-size: 3.5rem; margin-bottom: 1rem; }
+            p { max-width: 100%; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -1358,14 +1645,17 @@
                         { title: "FOOTPATHS", desc: "Public and private pedestrian paving in stipple finishes.", img: "images/la1.png" }
                     ];
 
-                    const bgTexts = ["STRENGTH", "PRECISION", "BUILT TO LAST"];
                     const items = [];
 
                     // MOBILE DETECTION
                     const isMobile = window.innerWidth < 768;
                     
-                    // THE FIX: Dropped spacing again so they are packed in tight
-                    const zGap = isMobile ? 800 : 1100; // Was 1000 / 1500
+                    // THE FIX: Added more words to the text animation for mobile only
+                    const bgTexts = isMobile 
+                        ? ["STRENGTH", "PRECISION", "QUALITY", "BUILT TO LAST", "ENDURANCE", "EXPERTISE"] 
+                        : ["STRENGTH", "PRECISION", "BUILT TO LAST"];
+                    
+                    const zGap = isMobile ? 800 : 1100;
 
                     // 1. Generate Structural Tunnel Rings
                     for(let i = 0; i < 30; i++) {
@@ -1416,63 +1706,67 @@
                         items.push({ el: cardWrapper, x: xOffset, y: yOffset, rotZ: rotZ, rotY: rotY, baseZ: -i * zGap, type: 'card' });
                     });
 
-                    // 4. Map GSAP Scroll to 3D Camera Movement
-                    let targetCameraZ = 0;
-                    const maxDistance = (servicesData.length - 1) * zGap;
+                    // 4. Map GSAP Scroll to 3D Camera Movement (DESKTOP ONLY)
+                    let mm = gsap.matchMedia();
 
-                    ScrollTrigger.create({
-                        trigger: tunnelSection,
-                        start: "top top",
-                        end: "+=4500",
-                        pin: true,
-                        scrub: 1,
-                        onUpdate: (self) => {
-                            targetCameraZ = self.progress * maxDistance;
-                        }
-                    });
+                    mm.add("(min-width: 769px)", () => {
+                        let targetCameraZ = 0;
+                        const maxDistance = (servicesData.length - 1) * zGap;
 
-                    // 5. Render Loop
-                    let currentCameraZ = 0;
-                    gsap.ticker.add(() => {
-                        currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
-
-                        items.forEach((item) => {
-                            const relZ = item.baseZ + currentCameraZ;
-
-                            let opacity = 1;
-                            if (relZ > 400) opacity = 0;
-                            else if (relZ > 0) opacity = 1 - (relZ / 400);
-                            else if (relZ < -4500) opacity = 0;
-                            else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
-
-                            item.el.style.opacity = opacity;
-
-                            if (opacity > 0) {
-                                let currentX = item.x;
-                                let currentY = item.y;
-                                let currentRotY = item.rotY || 0;
-                                let currentRotZ = item.rotZ || 0;
-
-                                if (item.type === 'card') {
-                                    let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
-                                    let ease = sweepProgress * (2 - sweepProgress);
-
-                                    currentX = item.x * (1 - ease);
-                                    currentY = item.y * (1 - ease);
-                                    currentRotY = item.rotY * (1 - ease);
-                                    currentRotZ = item.rotZ * (1 - ease);
-                                }
-
-                                let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
-
-                                if (item.type === 'card') {
-                                    transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
-                                } else if (item.type === 'text') {
-                                    transform += ` rotateZ(${item.rot}deg)`;
-                                }
-
-                                item.el.style.transform = transform;
+                        ScrollTrigger.create({
+                            trigger: tunnelSection,
+                            start: "top top",
+                            end: "+=4500",
+                            pin: true,
+                            scrub: 1,
+                            onUpdate: (self) => {
+                                targetCameraZ = self.progress * maxDistance;
                             }
+                        });
+
+                        // 5. Render Loop (DESKTOP ONLY)
+                        let currentCameraZ = 0;
+                        gsap.ticker.add(() => {
+                            currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
+
+                            items.forEach((item) => {
+                                const relZ = item.baseZ + currentCameraZ;
+                                let opacity = 1;
+
+                                if (relZ > 400) opacity = 0;
+                                else if (relZ > 0) opacity = 1 - (relZ / 400);
+                                else if (relZ < -4500) opacity = 0;
+                                else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
+
+                                item.el.style.opacity = opacity;
+
+                                if (opacity > 0) {
+                                    let currentX = item.x;
+                                    let currentY = item.y;
+                                    let currentRotY = item.rotY || 0;
+                                    let currentRotZ = item.rotZ || 0;
+
+                                    if (item.type === 'card') {
+                                        let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
+                                        let ease = sweepProgress * (2 - sweepProgress);
+
+                                        currentX = item.x * (1 - ease);
+                                        currentY = item.y * (1 - ease);
+                                        currentRotY = item.rotY * (1 - ease);
+                                        currentRotZ = item.rotZ * (1 - ease);
+                                    }
+
+                                    let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
+
+                                    if (item.type === 'card') {
+                                        transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
+                                    } else if (item.type === 'text') {
+                                        transform += ` rotateZ(${item.rot}deg)`;
+                                    }
+
+                                    item.el.style.transform = transform;
+                                }
+                            });
                         });
                     });
                 }
@@ -1561,11 +1855,14 @@
                 }
         }
 
-        /* --- LOADER LOGIC (3 SECOND TIMER) --- */
+        /* --- LOADER LOGIC (DYNAMIC TIMER) --- */
         window.addEventListener("load", function () {
             const loader = document.getElementById("loader-wrapper");
             
-            // Wait 3 seconds
+            // THE FIX: 2.6s for mobile so the text finishes, 3s for desktop
+            const isMobilePhone = window.innerWidth < 768;
+            const loadDelay = isMobilePhone ? 2600 : 3000;
+            
             setTimeout(function() {
                 loader.classList.add("loader-hidden");
 
@@ -1577,7 +1874,7 @@
                         initPageAnimations();
                     }
                 });
-            }, 3000); 
+            }, loadDelay); 
         });
 
                 // =========================================================================

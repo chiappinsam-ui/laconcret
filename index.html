@@ -316,41 +316,56 @@
            ========================================================================== */
         .hero-bg {
             position: absolute;
-            top: 0; left: 0; 
-            width: 100%; height: 120%;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%; /* Keeps the scroll parallax working */
             z-index: 1;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             padding: 20px;
             background-color: #050505;
+            align-content: center;
+            align-items: center; /* CRITICAL: Stops the grid from stretching items vertically */
         }
 
         .video-card {
             position: relative;
-            width: 100%; height: 100%;
-            border-radius: 20px; 
+            width: 100%;
+            height: 70vh;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1); 
-            background: #000; 
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #000;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .video-card video {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
 
         .v-overlay {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0,0,0,0.4);
             z-index: 2;
         }
 
         @media (max-width: 768px) {
-            .hero-bg { gap: 10px; padding: 10px; }
-            .video-card { border-radius: 10px; }
+            .hero-bg {
+                gap: 8px;
+                padding: 10px;
+                align-content: center !important;
+                align-items: center !important;
+            }
+            .video-card {
+                height: 35vh !important; /* Drastically shorter so they look like neat rectangles, not slivers */
+                border-radius: 12px;
+            }
         }
 
         /* ==========================================================================
@@ -530,13 +545,21 @@
             opacity: 0.5;
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .horizontal-track { flex-direction: column; height: auto; padding-left: 5vw; padding-right: 5vw; }
-            .h-panel { width: 100%; height: 60vh; padding: 0 1vw; margin-bottom: 20px; }
-            .panel-content { height: 100%; }
-            .panel-text { padding: 1.5rem; }
-            .panel-number { top: 1rem; right: 1rem; }
+            .panel-text { 
+                padding: 1.5rem; 
+            }
+            .panel-text h3 { 
+                font-size: clamp(2.5rem, 8vw, 3.5rem); 
+            }
+            .panel-text p { 
+                font-size: 0.95rem; 
+            }
+            .panel-number { 
+                top: 1rem; 
+                right: 1rem; 
+                font-size: 3.5rem; 
+            }
         }
 
         /* ==========================================================================
@@ -570,14 +593,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 200%; /* Keeps the extended height */
-
-            /* SMOOTHER, LIGHTER GRADIENT */
+            height: 200%;
             background: linear-gradient(
                 to bottom,
-                rgba(0, 0, 0, 0.3) 0%,    /* Much clearer at top */
-                rgba(0, 0, 0, 0.6) 30%,   /* Subtle tint in middle */
-                rgba(0, 0, 0, 0.85) 80%   /* Deep charcoal at bottom, NOT solid pitch black */
+                #050505 0%,
+                rgba(5, 5, 5, 0.4) 10%,
+                rgba(0, 0, 0, 0.7) 40%,
+                #050505 85%
             );
 
             z-index: 1;
@@ -715,13 +737,13 @@
             z-index: 10;
         }
 
-        .footer-copyright {
+        .footer-copyright p {
             text-align: center;
             color: rgba(255,255,255,0.3);
-            font-size: 0.7rem; /* Slightly smaller for a sleek look */
+            font-size: 0.65rem !important; /* The !important overrides the global <p> size */
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin: 0; /* Removes the old bulky margin */
+            margin: 0;
         }
 
         /* ==========================================================================
@@ -748,14 +770,6 @@
             .input-row { flex-direction: column; gap: 1rem; }
         }
 
-        /* Mobile Fixes */
-        @media (max-width: 1000px) {
-            .horizontal-scroll-wrapper { height: auto; display: block; }
-            .horizontal-track { flex-direction: column; height: auto; padding-left: 5vw; padding-right: 5vw; gap: 40px; }
-            .h-panel { width: 100%; height: 80vh; padding: 0; border-right: none; }
-            .panel-content { height: 100%; }
-        }
-
         /* ==========================================================================
            MOBILE MENU ANIMATIONS & SCREEN LOCK
            ========================================================================== */
@@ -765,12 +779,12 @@
         }
 
         #hamburger-btn.is-active span:nth-child(1) {
-            transform: translateY(3.5px) rotate(45deg);
+            transform: translateY(4px) rotate(45deg);
         }
         
         #hamburger-btn.is-active span:nth-child(2) {
-            transform: translateY(-3.5px) rotate(-45deg);
-            width: 1.75rem !important; 
+            transform: translateY(-4px) rotate(-45deg);
+            width: 1.5rem !important; 
         }
 
         #mobile-menu-overlay.is-active {
@@ -781,6 +795,251 @@
         #mobile-menu-overlay.is-active .mobile-link {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* --- ULTIMATE MOBILE FIXES (Does not affect PC) --- */
+        @media (max-width: 1024px) {
+            /* 1. Wrapper setup */
+            .horizontal-scroll-wrapper {
+                height: auto !important;
+                min-height: auto;
+                padding: 80px 0 40px 0 !important;
+                display: block !important;
+                overflow: visible !important;
+            }
+
+            /* 2. Track spacing */
+            .horizontal-track {
+                display: flex !important;
+                flex-direction: column !important;
+                height: auto !important;
+                gap: 0 !important;
+                padding: 0 5vw !important;
+            }
+
+            /* 3. Force each panel to act as a full-screen container */
+            .h-panel {
+                width: 100% !important;
+                min-height: 100vh !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            /* 4. The Card itself */
+            .panel-content {
+                width: 100% !important;
+                height: 85vh !important;
+                min-height: 500px !important;
+                max-height: none !important;
+                border-radius: 20px !important;
+            }
+
+            /* Fixes iOS Safari bug */
+            .parallax-extension { background-attachment: scroll !important; }
+        }
+
+        @media (max-width: 768px) {
+            /* 1. Hero Videos */
+            .hero-bg { grid-template-columns: 1fr; align-content: center; gap: 1rem; padding: 1.5rem; }
+            .video-card { height: 28vh !important; border-radius: 16px; }
+
+            /* 2. Parallax Background Fix */
+            .parallax-extension {
+                background-attachment: scroll !important; 
+                padding: 100px 0 60px 0 !important; 
+            }
+
+            /* 3. THE MAGIC: Split into distinct full-screen slides */
+            .content-row {
+                min-height: 85vh !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                gap: 1.5rem !important;
+            }
+
+            /* 4. Center Everything & Tighten Typography */
+            .ext-left, .footer-left {
+                text-align: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+            .ext-left h2, .footer-left h2 { font-size: 3.5rem !important; margin-bottom: 0 !important; line-height: 0.9 !important; }
+            .ext-left p, .footer-left p { font-size: 0.95rem !important; margin-bottom: 1rem !important; max-width: 100% !important; }
+            .ext-left .mag-btn { padding: 1rem 2rem !important; font-size: 0.75rem !important; margin-bottom: 1rem !important; }
+
+            .input-row { flex-direction: column; gap: 1rem; }
+
+            /* 5. Super Compact Stats Grid */
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 0.5rem !important; 
+                width: 100% !important;
+            }
+
+            .stat-box { padding: 1rem 0.5rem !important; border-radius: 12px !important; }
+            .stat-box .number { font-size: 1.8rem !important; margin-bottom: 0 !important; }
+            .stat-box .label { font-size: 0.65rem !important; }
+
+            /* 6. Give the divider room to breathe between the two slides */
+            .divider-line { margin: 3rem 0 !important; opacity: 0.3; }
+        }
+    </style>
+    <style>
+        /* VARIABLES */
+        :root {
+            --c-orange: #FF4D00;
+            --c-text: #FFFFFF;
+            --c-bg: #050505;
+            --font-header: 'Kanit', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- LOADER --- */
+        .loader { position: fixed; inset: 0; background: #F0F0F0; z-index: 20000; display: flex; justify-content: center; align-items: center; color: black; }
+        .loader-logo { font-family: var(--font-header); font-size: 8vw; font-weight: 800; letter-spacing: -0.05em; overflow: hidden; display: flex; gap: 0.5em; }
+        .loader-logo span { display: block; transform: translateY(110%); }
+        .loader-logo .accent { color: var(--c-orange); }
+
+        /* --- LAYOUT --- */
+        nav { isolation: isolate; }
+
+        .services-container {
+            width: 100%;
+            position: relative;
+            padding-top: 20vh;
+            padding-bottom: 20vh;
+        }
+
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5vw;
+            min-height: 80vh;
+            width: 100%;
+            padding: 0 5vw;
+            margin-bottom: 10vh;
+            box-sizing: border-box;
+        }
+
+        /* ZIG-ZAG LOGIC */
+        .service-row:nth-child(even) { flex-direction: row-reverse; }
+
+        /* COLUMNS */
+        .text-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* ORANGE ACCENT BARS */
+        .text-col {
+            padding-left: 2rem;
+            border-left: 6px solid var(--c-orange);
+        }
+
+        /* FLIP ACCENT FOR EVEN ROWS */
+        .service-row:nth-child(even) .text-col {
+            align-items: flex-end;
+            text-align: right;
+            padding-left: 0;
+            padding-right: 2rem;
+            border-left: none;
+            border-right: 6px solid var(--c-orange);
+        }
+
+        .img-col {
+            width: 45%;
+            height: 65vh;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            will-change: transform;
+        }
+
+        /* IMAGE HOVER */
+        .service-row:hover .img-col {
+            border-color: var(--c-orange);
+            box-shadow: 0 20px 80px rgba(255, 77, 0, 0.1);
+        }
+
+        .img-wrapper { width: 100%; height: 120%; position: absolute; top: 0; left: 0; will-change: transform; }
+        .img-wrapper img, .img-wrapper video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) grayscale(0.2); transition: all 0.5s ease; }
+        .service-row:hover .img-wrapper img, .service-row:hover .img-wrapper video { filter: brightness(1) grayscale(0); }
+
+        /* --- TYPOGRAPHY (THE FIX) --- */
+        .num { display: none !important; }
+
+        h3 {
+            font-family: var(--font-header);
+            font-size: clamp(3.5rem, 7vw, 9rem);
+            font-weight: 800;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin: 0 0 1.5rem 0;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        h3 span { color: var(--c-orange); }
+
+        p {
+            font-family: var(--font-body);
+            font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+            color: #cccccc;
+            max-width: 550px;
+            line-height: 1.5;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1024px) {
+            .service-row {
+                flex-direction: column !important;
+                gap: 2.5rem;
+                padding: 0 6vw;
+                margin-bottom: 100px;
+                height: auto;
+                min-height: auto;
+            }
+
+            .img-col {
+                width: 100%;
+                height: 40vh;
+                border: 1px solid rgba(255, 77, 0, 0.2);
+            }
+
+            .text-col {
+                width: 100%;
+                align-items: flex-start !important;
+                text-align: left !important;
+                border-right: none !important;
+                border-left: 6px solid var(--c-orange) !important;
+                padding-right: 0 !important;
+                padding-left: 1.5rem !important;
+            }
+
+            h3 { font-size: 3.5rem; margin-bottom: 1rem; }
+            p { max-width: 100%; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -812,14 +1071,14 @@
     </div>
 </nav>
 
-<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-between items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl">
+<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-center items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full h-16 shadow-2xl">
     <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
         LA <span class="text-concrete-orange">CONCRETE</span>
     </a>
     
-    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[5px] relative z-[1001] focus:outline-none">
-        <span class="w-7 h-[2px] bg-white transition-all duration-300 origin-center"></span>
-        <span class="w-5 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[6px] absolute right-6 z-[1001] focus:outline-none">
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
     </button>
 </div>
 
@@ -867,7 +1126,7 @@
 
             <div class="hero-content">
                 <div class="absolute inset-0 flex flex-col items-center justify-center w-full px-8 z-20 h1-reveal">
-                    <h2 class="font-[Kanit] font-black uppercase text-white text-5xl md:text-7xl lg:text-[6.5vw] text-center leading-[1.1] drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">
+                    <h2 class="font-[Kanit] font-black uppercase text-white text-[12vw] md:text-7xl lg:text-[6.5vw] text-center leading-[1.1] drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">
                         <span id="typing-text" class="typing-text"></span><span class="text-concrete-orange animate-pulse">|</span>
                     </h2>
                 </div>
@@ -1021,7 +1280,7 @@
 
             <footer class="site-footer">
                 <div class="footer-copyright">
-                    <p>&copy; 2024 LA Concrete. Built to Last.</p>
+                    <p>&copy; 2026 LA Concrete. Built to Last.</p>
                 </div>
             </footer>
 
@@ -1138,9 +1397,19 @@
             }
         });
 
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        // --- SMOOTH SCROLL (LENIS) + GSAP SYNC ---
+        const lenis = new Lenis();
+
+        // Tell GSAP to update its triggers whenever Lenis scrolls
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // Sync GSAP's ticker with Lenis's requestAnimationFrame
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        // Turn off GSAP's lag smoothing to stop them from fighting over the scroll position
+        gsap.ticker.lagSmoothing(0);
 
                 // =========================================================================
         // LOADER SEQUENCE
@@ -1236,6 +1505,7 @@
                     if (typeof initPageAnimations === "function") {
                         initPageAnimations();
                     }
+                    ScrollTrigger.refresh();
                 });
             }, 3000); 
         });
@@ -1246,7 +1516,7 @@
         // =========================================================================
         let mm = gsap.matchMedia();
 
-        mm.add('(min-width: 1001px)', () => {
+        mm.add('(min-width: 1025px)', () => {
             const track = document.querySelector('.horizontal-track');
             if (!track) return;
 
@@ -1258,16 +1528,16 @@
                 scrollTrigger: {
                     trigger: '.horizontal-scroll-wrapper',
                     pin: true,
-                    scrub: 1, 
+                    scrub: 1,
                     start: 'top top',
-                    end: () => '+=' + getScrollAmount(), 
+                    end: () => '+=' + getScrollAmount(),
                     invalidateOnRefresh: true
                 }
             });
 
             // CARDS: Vertical Rise + Hero Fade
             gsap.utils.toArray('.panel-content').forEach((panel, i) => {
-                if (i === 0) return; 
+                if (i === 0) return;
 
                 gsap.from(panel, {
                     y: 150,
@@ -1276,11 +1546,31 @@
                     ease: 'power4.out',
                     scrollTrigger: {
                         trigger: panel,
-                        containerAnimation: tween, 
-                        start: 'left 85%', 
-                        toggleActions: 'play none none reverse' 
+                        containerAnimation: tween,
+                        start: 'left 85%',
+                        toggleActions: 'play none none reverse'
                     }
                 });
+            });
+        });
+
+        mm.add('(max-width: 1024px)', () => {
+            gsap.utils.toArray('.panel-content').forEach((panel) => {
+                // FIXED: Changed to fromTo so it doesn't get stuck at opacity 0
+                gsap.fromTo(panel,
+                    { y: 100, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1.2,
+                        ease: 'power4.out',
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: 'top 85%',
+                            toggleActions: 'play none none reverse'
+                        }
+                    }
+                );
             });
         });
 
