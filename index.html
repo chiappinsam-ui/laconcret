@@ -530,19 +530,9 @@
             max-width: 500px;
             line-height: 1.4;
         }
-        /* The Big Number - Moved slightly to fit better */
+        /* The Big Number - Hidden completely across all devices */
         .panel-number {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            z-index: 3;
-            font-family: var(--f-heading);
-            font-size: clamp(4rem, 6vw, 6rem);
-            line-height: 1;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.4);
-            opacity: 0.5;
+            display: none !important;
         }
 
         @media (max-width: 768px) {
@@ -597,9 +587,10 @@
             background: linear-gradient(
                 to bottom,
                 #050505 0%,
-                rgba(5, 5, 5, 0.4) 10%,
-                rgba(0, 0, 0, 0.7) 40%,
-                #050505 85%
+                #050505 150px,
+                rgba(0, 0, 0, 0.6) 300px,
+                rgba(0, 0, 0, 0.85) 80%,
+                #050505 100%
             );
 
             z-index: 1;
@@ -740,7 +731,7 @@
         .footer-copyright p {
             text-align: center;
             color: rgba(255,255,255,0.3);
-            font-size: 0.65rem !important; /* The !important overrides the global <p> size */
+            font-size: 0.75rem !important; /* The perfect middle ground */
             text-transform: uppercase;
             letter-spacing: 2px;
             margin: 0;
@@ -799,35 +790,34 @@
 
         /* --- ULTIMATE MOBILE FIXES (Does not affect PC) --- */
         @media (max-width: 1024px) {
-            /* 1. Wrapper setup */
+            /* 1. Wrapper setup - Massive top padding to push the hero section completely out of frame */
             .horizontal-scroll-wrapper {
                 height: auto !important;
                 min-height: auto;
-                padding: 80px 0 40px 0 !important;
+                padding: 140px 0 60px 0 !important;
                 display: block !important;
                 overflow: visible !important;
             }
 
-            /* 2. Track spacing */
+            /* 2. Track spacing - Kept the exact same gap */
             .horizontal-track {
                 display: flex !important;
                 flex-direction: column !important;
                 height: auto !important;
-                gap: 0 !important;
+                gap: 2rem !important;
                 padding: 0 5vw !important;
             }
 
-            /* 3. Force each panel to act as a full-screen container */
+            /* 3. Panel Container */
             .h-panel {
                 width: 100% !important;
-                min-height: 100vh !important;
+                height: auto !important;
+                min-height: auto !important;
                 padding: 0 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
+                display: block !important;
             }
 
-            /* 4. The Card itself */
+            /* 4. The Card itself - Made them much bigger */
             .panel-content {
                 width: 100% !important;
                 height: 85vh !important;
@@ -848,16 +838,16 @@
             /* 2. Parallax Background Fix */
             .parallax-extension {
                 background-attachment: scroll !important; 
-                padding: 100px 0 60px 0 !important; 
+                padding: 60px 0 40px 0 !important; 
             }
 
             /* 3. THE MAGIC: Split into distinct full-screen slides */
             .content-row {
-                min-height: 85vh !important;
+                min-height: 80vh !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
-                gap: 1.5rem !important;
+                gap: 2.5rem !important;
             }
 
             /* 4. Center Everything & Tighten Typography */
@@ -873,16 +863,19 @@
 
             .input-row { flex-direction: column; gap: 1rem; }
 
-            /* 5. Super Compact Stats Grid */
+            /* 5. Beefier Stats Grid */
             .stats-container {
                 grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 0.5rem !important; 
+                gap: 1rem !important; 
                 width: 100% !important;
             }
 
-            .stat-box { padding: 1rem 0.5rem !important; border-radius: 12px !important; }
-            .stat-box .number { font-size: 1.8rem !important; margin-bottom: 0 !important; }
-            .stat-box .label { font-size: 0.65rem !important; }
+            .stat-box {
+                padding: 2.5rem 0.5rem !important;
+                border-radius: 16px !important;
+            }
+            .stat-box .number { font-size: 2.2rem !important; margin-bottom: 0.25rem !important; }
+            .stat-box .label { font-size: 0.75rem !important; }
 
             /* 6. Give the divider room to breathe between the two slides */
             .divider-line { margin: 3rem 0 !important; opacity: 0.3; }
@@ -1071,12 +1064,13 @@
     </div>
 </nav>
 
-<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-center items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full h-16 shadow-2xl">
-    <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
+<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-0 right-0 z-[1000] flex flex-col justify-center items-center bg-transparent py-4 pointer-events-none">
+    
+    <a href="index.html" class="font-[Kanit] font-black text-white text-2xl tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] pointer-events-auto">
         LA <span class="text-concrete-orange">CONCRETE</span>
     </a>
     
-    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[6px] absolute right-6 z-[1001] focus:outline-none">
+    <button id="hamburger-btn" class="w-8 h-6 flex flex-col justify-center items-center gap-[6px] relative z-[1001] focus:outline-none mt-3 pointer-events-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
         <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
         <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
     </button>
@@ -1556,7 +1550,7 @@
 
         mm.add('(max-width: 1024px)', () => {
             gsap.utils.toArray('.panel-content').forEach((panel) => {
-                // FIXED: Changed to fromTo so it doesn't get stuck at opacity 0
+                // Keep opacity control in the ScrollTrigger callbacks so cards fade out cleanly.
                 gsap.fromTo(panel,
                     { y: 100, opacity: 0 },
                     {
@@ -1567,7 +1561,26 @@
                         scrollTrigger: {
                             trigger: panel,
                             start: 'top 85%',
-                            toggleActions: 'play none none reverse'
+                            end: 'top top',
+                            toggleActions: 'play none none reverse',
+                            onLeave: () => gsap.to(panel, {
+                                opacity: 0,
+                                duration: 0.5,
+                                ease: 'power2.inOut',
+                                overwrite: 'auto'
+                            }),
+                            onEnterBack: () => gsap.to(panel, {
+                                opacity: 1,
+                                duration: 0.8,
+                                ease: 'power2.inOut',
+                                overwrite: 'auto'
+                            }),
+                            onLeaveBack: () => gsap.to(panel, {
+                                opacity: 0,
+                                duration: 0.5,
+                                ease: 'power2.inOut',
+                                overwrite: 'auto'
+                            })
                         }
                     }
                 );
