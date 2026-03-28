@@ -265,6 +265,7 @@
             background: #ff4d00;
             color: white;
         }
+
         /* Custom Radio Buttons / Cards */
         .option-card {
             background: rgba(255,255,255,0.03);
@@ -461,9 +462,14 @@
         /* --- MAP PLACEHOLDER --- */
         .map-frame {
             width: 100%;
-            height: 100%;
+            height: 220px;
             transition: all 0.5s ease;
             will-change: filter, opacity;
+        }
+        @media (min-width: 1024px) {
+            .map-frame {
+                height: 100%;
+            }
         }
     
         /* --- ANIMATIONS --- */
@@ -540,11 +546,11 @@
 
         /* Animates the Burger into an X */
         #hamburger-btn.is-active span:nth-child(1) {
-            transform: translateY(3.5px) rotate(45deg);
+            transform: translateY(4px) rotate(45deg);
         }
         #hamburger-btn.is-active span:nth-child(2) {
-            transform: translateY(-3.5px) rotate(-45deg);
-            width: 1.75rem !important; /* Stretches the short line to match */
+            transform: translateY(-4px) rotate(-45deg);
+            width: 1.5rem !important;
         }
 
         /* Fades in the Glass Overlay */
@@ -584,7 +590,7 @@
             <a href="index.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Home</a>
             <a href="services.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Services</a>
             <a href="about.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">About</a>
-            <a href="contact.html" class="pill-link active font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Contact</a>
+            <a href="contact.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-concrete-orange transition-colors px-3 py-2">Contact</a>
         </div>
         <a href="contact.html" class="nav-quote-btn bg-white text-black font-[Outfit] text-xs font-bold uppercase px-5 py-2.5 rounded-full hover:bg-concrete-orange hover:text-white transition-colors">
             Get Quote
@@ -592,14 +598,15 @@
     </div>
 </nav>
 
-<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-between items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl">
-    <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
+<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-0 right-0 z-[1000] flex flex-col justify-center items-center bg-transparent py-4 pointer-events-none">
+    
+    <a href="index.html" class="font-[Kanit] font-black text-white text-2xl tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] pointer-events-auto">
         LA <span class="text-concrete-orange">CONCRETE</span>
     </a>
     
-    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[5px] relative z-[1001] focus:outline-none">
-        <span class="w-7 h-[2px] bg-white transition-all duration-300 origin-center"></span>
-        <span class="w-5 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+    <button id="hamburger-btn" class="w-8 h-6 flex flex-col justify-center items-center gap-[6px] relative z-[1001] focus:outline-none mt-3 pointer-events-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
     </button>
 </div>
 
@@ -608,7 +615,7 @@
         <a href="index.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-100 hover:text-concrete-orange">Home</a>
         <a href="services.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-200 hover:text-concrete-orange">Services</a>
         <a href="about.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-300 hover:text-concrete-orange">About</a>
-        <a href="contact.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-400 hover:text-concrete-orange">Contact</a>
+        <a href="contact.html" class="mobile-link font-[Kanit] font-black text-4xl text-concrete-orange uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-400 hover:text-concrete-orange">Contact</a>
         
         <a href="contact.html" class="mobile-link mt-6 bg-concrete-orange text-white font-[Outfit] font-bold uppercase tracking-widest text-sm px-10 py-4 rounded-full opacity-0 translate-y-8 transition-all duration-500 delay-500 hover:bg-white hover:text-black w-full max-w-xs">
             Get Quote
@@ -616,76 +623,61 @@
     </div>
 </div>
 
-    <main class="relative z-10 pt-32 pb-12 px-6 min-h-screen flex flex-col justify-center items-center">
-        <div class="w-full max-w-7xl mx-auto flex-grow flex flex-col justify-center">
-            
-            <div class="text-center mb-12 form-anim opacity-0 translate-y-10">
-                <h1 class="font-[Kanit] font-black text-[13vw] md:text-7xl uppercase text-white tracking-tight">CONTACT <span class="text-concrete-orange">ANTHONY</span></h1>
-                <p class="font-[Outfit] text-white/50 mt-4 tracking-widest uppercase text-sm">Direct Line & Intake System</p>
+    <main class="relative w-full min-h-screen flex flex-col justify-start items-center">
+        <div class="pt-36 md:pt-48 pb-10 flex flex-col items-center text-center px-4 w-full z-10 form-anim opacity-0 translate-y-10">
+            <h1 class="font-[Kanit] font-black uppercase text-[13vw] md:text-7xl leading-[0.9] text-white">
+                CONTACT<br><span class="text-concrete-orange">ANTHONY</span>
+            </h1>
+            <p class="font-[Outfit] text-white/50 text-[10px] md:text-sm tracking-[0.2em] mt-5 uppercase">
+                Direct Line & Intake System
+            </p>
+        </div>
+
+        <div class="w-full max-w-6xl mx-auto px-4 pb-12 flex flex-col md:flex-row gap-4 md:gap-8 z-10">
+            <div class="w-full md:w-5/12 grid grid-cols-2 md:flex md:flex-col gap-3 md:gap-6">
+                <div class="bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl p-3 md:p-10 shadow-2xl flex flex-col justify-center overflow-hidden form-anim opacity-0 translate-y-10">
+                    <h3 class="font-[Kanit] font-bold text-white/50 text-sm md:text-sm tracking-[0.15em] uppercase mb-3 md:mb-6 border-b border-white/10 pb-2 md:pb-4">Direct</h3>
+
+                    <div class="space-y-5 md:space-y-8">
+                        <div>
+                            <p class="font-[Outfit] text-concrete-orange text-[10px] md:text-xs uppercase tracking-[0.1em] mb-1">Phone</p>
+                            <a href="tel:0400000000" class="font-[Kanit] font-bold text-lg md:text-4xl text-white hover:text-concrete-orange transition-colors tracking-wide block whitespace-nowrap">0400 000 000</a>
+                        </div>
+                        <div>
+                            <p class="font-[Outfit] text-concrete-orange text-[10px] md:text-xs uppercase tracking-[0.1em] mb-1">Email</p>
+                            <a href="mailto:info@laconcrete.com.au" class="font-[Kanit] font-bold text-[12px] sm:text-sm md:text-2xl text-white hover:text-concrete-orange transition-colors block whitespace-nowrap tracking-tight">info@laconcrete.com.au</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full min-h-[160px] md:h-72 rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl bg-[#1a1a1a] form-anim opacity-0 translate-y-10">
+                    <iframe src="https://maps.google.com/maps?q=Adelaide,%20South%20Australia&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        class="absolute inset-0 w-full h-full grayscale contrast-125 opacity-70 hover:opacity-100 transition-opacity duration-500 mix-blend-luminosity"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
-                
-                <div class="flex flex-col gap-6 h-full">
-                    <div class="flex-1 bg-black/40 backdrop-blur-xl border border-white/10 rounded-[24px] p-8 md:p-10 flex flex-col justify-center relative overflow-hidden form-anim opacity-0 translate-y-10">
-                        <h3 class="font-[Outfit] font-bold text-xs text-white/40 mb-6 uppercase tracking-[0.2em] border-b border-white/5 pb-4">Direct Contact</h3>
-                        <ul class="space-y-8">
-                            <li class="group">
-                                <span class="block text-[10px] text-white/40 uppercase tracking-widest mb-1">Phone</span>
-                                <a href="tel:0400000000" class="font-[Kanit] text-4xl font-bold text-white hover:text-concrete-orange transition-colors">0400 000 000</a>
-                            </li>
-                            <li class="group">
-                                <span class="block text-[10px] text-white/40 uppercase tracking-widest mb-1">Email</span>
-                                <a href="mailto:info@laconcrete.com.au" class="font-[Kanit] text-2xl font-bold text-white hover:text-concrete-orange transition-colors break-all">info@laconcrete.com.au</a>
-                            </li>
-                        </ul>
+            <div class="w-full md:w-7/12 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-10 shadow-2xl flex flex-col form-anim opacity-0 translate-y-10">
+                <h3 class="font-[Kanit] font-black text-white text-2xl md:text-4xl uppercase mb-4 md:mb-8 tracking-wide">General Inquiry</h3>
+
+                <form id="contact-form" class="flex flex-col gap-3 md:gap-6 flex-grow">
+                    <div class="grid grid-cols-2 gap-3 md:gap-6">
+                        <input type="text" placeholder="Name" required class="w-full bg-black/50 border border-white/10 rounded-xl p-3 md:p-4 text-white font-[Outfit] text-sm focus:outline-none focus:border-concrete-orange transition-colors">
+                        <input type="email" placeholder="Email" required class="w-full bg-black/50 border border-white/10 rounded-xl p-3 md:p-4 text-white font-[Outfit] text-sm focus:outline-none focus:border-concrete-orange transition-colors">
                     </div>
 
-                    <div class="flex-1 min-h-[200px] bg-black/40 backdrop-blur-xl border border-white/10 rounded-[24px] overflow-hidden relative form-anim opacity-0 translate-y-10 p-2">
-                        <div class="w-full h-full rounded-[16px] overflow-hidden relative">
-                            <iframe src="https://maps.google.com/maps?q=Adelaide,%20South%20Australia&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="map-frame grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-500"></iframe>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-black/40 backdrop-blur-xl border border-white/10 rounded-[24px] p-8 md:p-12 relative overflow-hidden flex flex-col h-full form-anim opacity-0 translate-y-10">
-                    <div class="flex justify-between items-start mb-12">
-                        <h2 class="font-[Kanit] font-bold text-3xl text-white uppercase">General Inquiry</h2>
-                        <div class="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-full border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.02)] hidden sm:flex">
-                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></span>
-                            <span class="text-white text-[10px] font-bold uppercase tracking-widest">System Online</span>
-                        </div>
+                    <div class="grid grid-cols-2 gap-3 md:gap-6">
+                        <input type="tel" placeholder="Phone" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 md:p-4 text-white font-[Outfit] text-sm focus:outline-none focus:border-concrete-orange transition-colors">
+                        <input type="text" placeholder="Suburb" class="w-full bg-black/50 border border-white/10 rounded-xl p-3 md:p-4 text-white font-[Outfit] text-sm focus:outline-none focus:border-concrete-orange transition-colors">
                     </div>
 
-                    <form id="contact-form" class="flex-grow flex flex-col justify-between">
-                        <div class="space-y-8">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="relative pt-4">
-                                    <input type="text" class="w-full bg-transparent border-b border-white/20 pb-2 text-white font-[Outfit] text-lg focus:outline-none focus:border-concrete-orange transition-colors peer" placeholder=" " required>
-                                    <label class="absolute left-0 top-4 text-white/40 font-[Outfit] text-sm uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:-top-1 peer-focus:text-[10px] peer-focus:text-concrete-orange peer-valid:-top-1 peer-valid:text-[10px]">First Name</label>
-                                </div>
-                                <div class="relative pt-4">
-                                    <input type="text" class="w-full bg-transparent border-b border-white/20 pb-2 text-white font-[Outfit] text-lg focus:outline-none focus:border-concrete-orange transition-colors peer" placeholder=" " required>
-                                    <label class="absolute left-0 top-4 text-white/40 font-[Outfit] text-sm uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:-top-1 peer-focus:text-[10px] peer-focus:text-concrete-orange peer-valid:-top-1 peer-valid:text-[10px]">Last Name</label>
-                                </div>
-                            </div>
-                            <div class="relative pt-4">
-                                <input type="email" class="w-full bg-transparent border-b border-white/20 pb-2 text-white font-[Outfit] text-lg focus:outline-none focus:border-concrete-orange transition-colors peer" placeholder=" " required>
-                                <label class="absolute left-0 top-4 text-white/40 font-[Outfit] text-sm uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:-top-1 peer-focus:text-[10px] peer-focus:text-concrete-orange peer-valid:-top-1 peer-valid:text-[10px]">Email Address</label>
-                            </div>
-                            <div class="relative pt-4 mt-8">
-                                <textarea class="w-full bg-transparent border-b border-white/20 pb-2 text-white font-[Outfit] text-lg focus:outline-none focus:border-concrete-orange transition-colors peer h-32 resize-none" placeholder=" " required></textarea>
-                                <label class="absolute left-0 top-4 text-white/40 font-[Outfit] text-sm uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:-top-1 peer-focus:text-[10px] peer-focus:text-concrete-orange peer-valid:-top-1 peer-valid:text-[10px]">Tell us about your project...</label>
-                            </div>
-                        </div>
+                    <textarea rows="3" placeholder="Tell us about your project..." required class="w-full bg-black/50 border border-white/10 rounded-xl p-3 md:p-4 text-white font-[Outfit] text-sm focus:outline-none focus:border-concrete-orange transition-colors resize-none"></textarea>
 
-                        <div class="mt-12 pt-8 border-t border-white/10 text-right">
-                            <button type="submit" class="bg-white text-black font-[Kanit] font-bold uppercase tracking-widest text-sm px-10 py-4 rounded-full hover:bg-concrete-orange hover:text-white transition-colors duration-300">
-                                Send Message
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <button type="submit" class="mt-2 w-full bg-white text-black font-[Kanit] font-bold uppercase tracking-widest text-sm md:text-base py-3 md:py-4 rounded-xl hover:bg-concrete-orange hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(255,77,0,0.4)]">
+                        Send Message
+                    </button>
+                </form>
             </div>
         </div>
     </main>
@@ -812,23 +804,39 @@
             });
         });
 
-        // --- 6. SMART NAVIGATION HIDE ---
-        const nav = document.querySelector('nav');
-        let lastScrollY = window.scrollY;
+        // =========================================================================
+        // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
+        // =========================================================================
+        const desktopNav = document.getElementById('pill-nav-container');
+        const mobileNav = document.getElementById('mobile-nav-bar');
+        let lastNavScrollY = window.scrollY;
+
+        if (mobileNav) {
+            mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+        }
+        if (desktopNav) {
+            desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+        }
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+            const currentScrollY = window.scrollY;
+
+            if (document.body.classList.contains('menu-open') || currentScrollY <= 50) {
+                if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+                lastNavScrollY = currentScrollY;
+                return;
             }
 
-            if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                nav.classList.add('nav-hidden');
+            if (currentScrollY > lastNavScrollY) {
+                if (desktopNav) desktopNav.style.transform = 'translateY(-100%)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(-100%)';
             } else {
-                nav.classList.remove('nav-hidden');
+                if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(0)';
             }
-            lastScrollY = window.scrollY;
+
+            lastNavScrollY = currentScrollY;
         });
 
         // =========================================================================

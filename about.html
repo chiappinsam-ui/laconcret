@@ -265,11 +265,11 @@
 
         /* Animates the Burger into an X */
         #hamburger-btn.is-active span:nth-child(1) {
-            transform: translateY(3.5px) rotate(45deg);
+            transform: translateY(4px) rotate(45deg);
         }
         #hamburger-btn.is-active span:nth-child(2) {
-            transform: translateY(-3.5px) rotate(-45deg);
-            width: 1.75rem !important; /* Stretches the short line to match */
+            transform: translateY(-4px) rotate(-45deg);
+            width: 1.5rem !important;
         }
 
         /* Fades in the Glass Overlay */
@@ -308,7 +308,7 @@
         <div class="nav-items-wrapper flex items-center gap-2">
             <a href="index.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Home</a>
             <a href="services.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Services</a>
-            <a href="about.html" class="pill-link active font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">About</a>
+            <a href="about.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-concrete-orange transition-colors px-3 py-2">About</a>
             <a href="contact.html" class="pill-link font-[Outfit] text-sm font-bold uppercase text-white/70 hover:text-concrete-orange transition-colors px-3 py-2">Contact</a>
         </div>
         <a href="contact.html" class="nav-quote-btn bg-white text-black font-[Outfit] text-xs font-bold uppercase px-5 py-2.5 rounded-full hover:bg-concrete-orange hover:text-white transition-colors">
@@ -317,14 +317,15 @@
     </div>
 </nav>
 
-<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-between items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl">
-    <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
+<div id="mobile-nav-bar" class="md:hidden fixed top-4 left-0 right-0 z-[1000] flex flex-col justify-center items-center bg-transparent py-4 pointer-events-none">
+    
+    <a href="index.html" class="font-[Kanit] font-black text-white text-2xl tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] pointer-events-auto">
         LA <span class="text-concrete-orange">CONCRETE</span>
     </a>
     
-    <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[5px] relative z-[1001] focus:outline-none">
-        <span class="w-7 h-[2px] bg-white transition-all duration-300 origin-center"></span>
-        <span class="w-5 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+    <button id="hamburger-btn" class="w-8 h-6 flex flex-col justify-center items-center gap-[6px] relative z-[1001] focus:outline-none mt-3 pointer-events-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
+        <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
     </button>
 </div>
 
@@ -332,7 +333,7 @@
     <div class="flex flex-col items-center gap-8 text-center w-full px-6">
         <a href="index.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-100 hover:text-concrete-orange">Home</a>
         <a href="services.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-200 hover:text-concrete-orange">Services</a>
-        <a href="about.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-300 hover:text-concrete-orange">About</a>
+        <a href="about.html" class="mobile-link font-[Kanit] font-black text-4xl text-concrete-orange uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-300 hover:text-concrete-orange">About</a>
         <a href="contact.html" class="mobile-link font-[Kanit] font-black text-4xl text-white uppercase tracking-widest opacity-0 translate-y-8 transition-all duration-500 delay-400 hover:text-concrete-orange">Contact</a>
         
         <a href="contact.html" class="mobile-link mt-6 bg-concrete-orange text-white font-[Outfit] font-bold uppercase tracking-widest text-sm px-10 py-4 rounded-full opacity-0 translate-y-8 transition-all duration-500 delay-500 hover:bg-white hover:text-black w-full max-w-xs">
@@ -517,6 +518,41 @@
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
+
+        // =========================================================================
+        // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
+        // =========================================================================
+        const desktopNav = document.getElementById('pill-nav-container');
+        const mobileNav = document.getElementById('mobile-nav-bar');
+        let lastNavScrollY = window.scrollY;
+
+        if (mobileNav) {
+            mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+        }
+        if (desktopNav) {
+            desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+        }
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (document.body.classList.contains('menu-open') || currentScrollY <= 50) {
+                if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+                lastNavScrollY = currentScrollY;
+                return;
+            }
+
+            if (currentScrollY > lastNavScrollY) {
+                if (desktopNav) desktopNav.style.transform = 'translateY(-100%)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(-100%)';
+            } else {
+                if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+            }
+
+            lastNavScrollY = currentScrollY;
+        });
 
         // =========================================================================
         // MOBILE MENU TOGGLE LOGIC
