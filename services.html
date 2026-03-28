@@ -32,11 +32,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Great+Vibes&family=Playfair+Display:ital@1&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
-        @keyframes slowZoomIn {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.5); }
-        }
-
         :root {
             /* Default Dark Mode Variables */
             --bg-main: #050505;
@@ -178,28 +173,6 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .services-hero {
-                position: relative;
-                overflow: hidden;
-            }
-
-            .services-hero::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-image:
-                    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                    url('images/la5.png');
-                background-size: cover;
-                background-position: center;
-                z-index: -1;
-                animation: slowZoomIn 5s linear forwards;
-                will-change: transform;
-            }
-
             /* --- THE GOLDILOCKS GAP --- */
             .services-hero {
                 height: 100vh !important; /* Forces the hero to fill the screen and hides the cards */
