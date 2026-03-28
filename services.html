@@ -32,6 +32,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Great+Vibes&family=Playfair+Display:ital@1&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
+        @keyframes slowZoomIn {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+
         :root {
             /* Default Dark Mode Variables */
             --bg-main: #050505;
@@ -173,6 +178,38 @@
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
+            .services-hero {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .services-hero::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image:
+                    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                    url('images/la5.png');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+                animation: slowZoomIn 5s linear forwards;
+                will-change: transform;
+            }
+
+            /* --- THE GOLDILOCKS GAP --- */
+            .services-hero {
+                height: 100vh !important; /* Forces the hero to fill the screen and hides the cards */
+                min-height: auto !important;
+            }
+
+            #services-3d-tunnel {
+                margin-top: 0 !important;
+            }
+
             /* 1. Loader fixes: Fit screen perfectly without clipping */
             .brand-wrapper { 
                 font-size: 9.5vw !important; /* Scaled down from 15vw */
@@ -181,21 +218,25 @@
             .cursive-text { font-size: 8vw !important; }
             .services-text { font-size: 8vw !important; }
 
-            /* 2. Compact the 3D front cards (Stops them from stretching vertically) */
+            /* 2. EXACT HOME PAGE CARD SIZES */
             .tunnel-card {
-                width: 85vw !important;
-                height: 55vh !important; /* Compacted heavily from 80vh */
-                max-height: 500px !important;
-                border-radius: 16px !important;
+                width: 90vw !important;  /* Stretches the card perfectly across the screen */
+                height: 85vh !important; /* Matches home page card height */
+                min-height: 500px !important;
+                border-radius: 20px !important;
             }
+
+            /* 3. MATCH HOME PAGE CARD TEXT FORMATTING */
             .tunnel-info {
-                padding: 1.5rem 1rem !important;
+                padding: 1.5rem !important;
             }
             .tunnel-text-content h2 {
-                font-size: 2.25rem !important;
+                font-size: 3.2rem !important;
+                line-height: 0.9 !important;
+                margin-bottom: 0.5rem !important;
             }
             .tunnel-text-content p {
-                font-size: 0.85rem !important;
+                font-size: 0.95rem !important;
                 max-width: 100% !important;
             }
             
@@ -206,21 +247,34 @@
                FOOTER COMPACTION (FORCE FIT TO SCREEN)
                ======================================================= */
             
-            /* 1. Strip the massive section padding */
+            /* 1. Give the whole section more breathing room */
             #animated-footer {
-                padding-top: 5rem !important; 
-                padding-bottom: 2rem !important;
+                min-height: auto !important;
+                padding: 60px 20px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
             }
             
-            /* 2. Kill the massive gap between the text and the cards */
+            /* 2. Open up the vertical spacing between the text column and stats column */
             #animated-footer > div.relative.z-20 {
-                gap: 1.5rem !important; 
-                margin-bottom: 0 !important; /* Removes the mb-24 */
+                gap: 2.5rem !important;
+                margin-bottom: 0 !important;
+                width: 100% !important;
+            }
+            #animated-footer > div.relative.z-20 > div:last-child {
+                width: 100% !important;
+                gap: 0 !important;
             }
 
-            /* 3. Compact the Text Section */
+            /* 3. Compact & CENTER the Text Section */
+            #animated-footer .items-start {
+                align-items: center !important;
+                text-align: center !important;
+            }
             #animated-footer h2 {
-                font-size: 3.5rem !important; /* Shrinks BUILT TO LAST */
+                font-size: 3.5rem !important; 
                 margin-bottom: 0.5rem !important;
                 line-height: 0.9 !important;
             }
@@ -230,25 +284,28 @@
                 line-height: 1.4 !important;
             }
             .footer-anim-left.inline-block {
-                margin-bottom: 1rem !important; /* Tighter badge margin */
+                margin-bottom: 1rem !important; 
             }
             .footer-contact-btn {
-                padding: 10px 24px !important; /* Slightly smaller button */
+                padding: 10px 24px !important; 
                 font-size: 0.75rem !important;
             }
 
             /* 4. Super Compact 2x2 Grid */
             #animated-footer .grid.grid-cols-1 {
                 grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-                gap: 8px !important; /* Tighter spacing between cards */
+                gap: 15px !important;
+                width: 100% !important;
+                margin-top: 40px !important;
+                margin-bottom: 40px !important;
             }
             .footer-stat-card {
-                padding: 1rem 0.5rem !important; /* Slashes card height */
+                padding: 20px 10px !important;
                 border-radius: 12px !important;
             }
             .stat-number {
                 font-size: 1.75rem !important; 
-                margin-bottom: 0 !important; /* Kills bottom margin */
+                margin-bottom: 0 !important; 
             }
             .footer-stat-card span:last-child {
                 font-size: 0.55rem !important;
@@ -256,12 +313,20 @@
                 margin-top: 4px !important;
             }
 
-            /* 5. Compact the bottom Email/Phone row (Side-by-side) */
+            /* 5. Center the bottom Email/Phone row */
             #animated-footer .border-t.border-white\/10 {
-                padding-top: 1rem !important;
+                width: 100% !important;
+                padding: 30px 0 !important;
                 gap: 1rem !important;
-                flex-direction: row !important; /* Forces side-by-side */
-                justify-content: space-between !important;
+                flex-direction: row !important; 
+                justify-content: space-around !important; 
+            }
+            #animated-footer .border-t.border-white\/10 > div {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                flex: 1; /* Ensures they balance nicely side-by-side */
             }
         }
         body {
@@ -382,13 +447,18 @@
            ========================================================================== */
         .services-hero {
             position: relative;
+            z-index: 10;
             height: 100vh;
             width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            color: #d1d5db;
+            text-align: center;
             overflow: hidden;
-            background-color: #000;
+            border-bottom: 2px solid #525252;
+            padding-bottom: 2rem;
         }
 
         .hero-video-bg {
@@ -1053,10 +1123,10 @@
             z-index: 10;
         }
 
-        .footer-copyright {
+        .footer-copyright p {
             text-align: center;
             color: rgba(255,255,255,0.3);
-            font-size: 0.7rem; 
+            font-size: 0.6rem !important; /* Shrunk down for a sleek look */
             text-transform: uppercase;
             letter-spacing: 2px;
             margin: 0; 
@@ -1197,12 +1267,12 @@
         }
 
         #hamburger-btn.is-active span:nth-child(1) {
-            transform: translateY(3.5px) rotate(45deg);
+            transform: translateY(4px) rotate(45deg);
         }
         
         #hamburger-btn.is-active span:nth-child(2) {
-            transform: translateY(-3.5px) rotate(-45deg);
-            width: 1.75rem !important; 
+            transform: translateY(-4px) rotate(-45deg);
+            width: 1.5rem !important; 
         }
 
         #mobile-menu-overlay.is-active {
@@ -1215,22 +1285,6 @@
             transform: translateY(0);
         }
 
-        /* --- MOBILE 3D TUNNEL FALLBACK --- */
-        @media (max-width: 768px) {
-            /* Kills 3D perspective and stacks items normally */
-            .viewport { perspective: none !important; position: relative !important; height: auto !important; }
-            .world { transform-style: flat !important; position: relative !important; display: flex !important; flex-direction: column !important; gap: 2rem; padding: 4rem 1.5rem; }
-
-            /* Disables random rotation and positioning */
-            .tunnel-item { position: relative !important; top: auto !important; left: auto !important; transform: none !important; opacity: 1 !important; }
-
-            /* Hides the massive rings and background text on mobile */
-            .tunnel-ring, .tunnel-big-text { display: none !important; }
-
-            /* Resizes cards for mobile screens */
-            .tunnel-card { width: 100% !important; height: 50vh !important; max-height: 400px !important; transform: none !important; }
-        }
- 
         /* VARIABLES */
         :root {
             --c-orange: #FF4D00;
@@ -1419,14 +1473,15 @@
         </div>
     </nav>
 
-    <div id="mobile-nav-bar" class="md:hidden fixed top-4 left-4 right-4 z-[1000] flex justify-between items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl">
-        <a href="index.html" class="font-[Kanit] font-black text-white text-xl tracking-wide">
+    <div id="mobile-nav-bar" class="md:hidden fixed top-4 left-0 right-0 z-[1000] flex flex-col justify-center items-center bg-transparent py-4 pointer-events-none">
+        
+        <a href="index.html" class="font-[Kanit] font-black text-white text-2xl tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] pointer-events-auto">
             LA <span class="text-concrete-orange">CONCRETE</span>
         </a>
         
-        <button id="hamburger-btn" class="w-8 h-8 flex flex-col justify-center items-end gap-[5px] relative z-[1001] focus:outline-none">
-            <span class="w-7 h-[2px] bg-white transition-all duration-300 origin-center"></span>
-            <span class="w-5 h-[2px] bg-white transition-all duration-300 origin-center"></span>
+        <button id="hamburger-btn" class="w-8 h-6 flex flex-col justify-center items-center gap-[6px] relative z-[1001] focus:outline-none mt-3 pointer-events-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+            <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
+            <span class="w-6 h-[2px] bg-white transition-all duration-300 origin-center block"></span>
         </button>
     </div>
 
@@ -1545,7 +1600,7 @@
 
             <footer class="site-footer">
                 <div class="footer-copyright">
-                    <p>&copy; 2024 LA Concrete. Built to Last.</p>
+                    <p>&copy; 2026 LA Concrete. Built to Last.</p>
                 </div>
             </footer>
 
@@ -1706,67 +1761,70 @@
                         items.push({ el: cardWrapper, x: xOffset, y: yOffset, rotZ: rotZ, rotY: rotY, baseZ: -i * zGap, type: 'card' });
                     });
 
-                    // 4. Map GSAP Scroll to 3D Camera Movement (DESKTOP ONLY)
-                    let mm = gsap.matchMedia();
+                    // =========================================================================
+                    // 4. Map GSAP Scroll to 3D Camera Movement (UNIVERSAL)
+                    // =========================================================================
+                    let targetCameraZ = 0;
+                    const maxDistance = (servicesData.length - 1) * zGap;
 
-                    mm.add("(min-width: 769px)", () => {
-                        let targetCameraZ = 0;
-                        const maxDistance = (servicesData.length - 1) * zGap;
+                    // Lower scroll distance on mobile so the full tunnel clears with less thumb travel.
+                    const scrollSpeed = isMobile ? "+=1800" : "+=4500";
 
-                        ScrollTrigger.create({
-                            trigger: tunnelSection,
-                            start: "top top",
-                            end: "+=4500",
-                            pin: true,
-                            scrub: 1,
-                            onUpdate: (self) => {
-                                targetCameraZ = self.progress * maxDistance;
-                            }
-                        });
+                    ScrollTrigger.create({
+                        trigger: tunnelSection,
+                        start: "top top",
+                        end: scrollSpeed,
+                        pin: true,
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            targetCameraZ = self.progress * maxDistance;
+                        }
+                    });
 
-                        // 5. Render Loop (DESKTOP ONLY)
-                        let currentCameraZ = 0;
-                        gsap.ticker.add(() => {
-                            currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
+                    // =========================================================================
+                    // 5. Render Loop (UNIVERSAL)
+                    // =========================================================================
+                    let currentCameraZ = 0;
+                    gsap.ticker.add(() => {
+                        currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
 
-                            items.forEach((item) => {
-                                const relZ = item.baseZ + currentCameraZ;
-                                let opacity = 1;
+                        items.forEach((item) => {
+                            const relZ = item.baseZ + currentCameraZ;
+                            let opacity = 1;
 
-                                if (relZ > 400) opacity = 0;
-                                else if (relZ > 0) opacity = 1 - (relZ / 400);
-                                else if (relZ < -4500) opacity = 0;
-                                else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
+                            if (relZ > 400) opacity = 0;
+                            else if (relZ > 0) opacity = 1 - (relZ / 400);
+                            else if (relZ < -4500) opacity = 0;
+                            else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
 
-                                item.el.style.opacity = opacity;
+                            item.el.style.opacity = opacity;
 
-                                if (opacity > 0) {
-                                    let currentX = item.x;
-                                    let currentY = item.y;
-                                    let currentRotY = item.rotY || 0;
-                                    let currentRotZ = item.rotZ || 0;
+                            if (opacity > 0) {
+                                let currentX = item.x;
+                                let currentY = item.y;
+                                let currentRotY = item.rotY || 0;
+                                let currentRotZ = item.rotZ || 0;
 
-                                    if (item.type === 'card') {
-                                        let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
-                                        let ease = sweepProgress * (2 - sweepProgress);
+                                if (item.type === 'card') {
+                                    let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
+                                    let ease = sweepProgress * (2 - sweepProgress);
 
-                                        currentX = item.x * (1 - ease);
-                                        currentY = item.y * (1 - ease);
-                                        currentRotY = item.rotY * (1 - ease);
-                                        currentRotZ = item.rotZ * (1 - ease);
-                                    }
-
-                                    let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
-
-                                    if (item.type === 'card') {
-                                        transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
-                                    } else if (item.type === 'text') {
-                                        transform += ` rotateZ(${item.rot}deg)`;
-                                    }
-
-                                    item.el.style.transform = transform;
+                                    currentX = item.x * (1 - ease);
+                                    currentY = item.y * (1 - ease);
+                                    currentRotY = item.rotY * (1 - ease);
+                                    currentRotZ = item.rotZ * (1 - ease);
                                 }
-                            });
+
+                                let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
+
+                                if (item.type === 'card') {
+                                    transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
+                                } else if (item.type === 'text') {
+                                    transform += ` rotateZ(${item.rot}deg)`;
+                                }
+
+                                item.el.style.transform = transform;
+                            }
                         });
                     });
                 }
