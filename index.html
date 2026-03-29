@@ -1658,7 +1658,7 @@
         });
 
         // =========================================================================
-        // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP (GSAP SYNCED)
+        // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP (WITH TOLERANCE)
         // =========================================================================
         const desktopNav = document.getElementById('pill-nav-container');
         const mobileNav = document.getElementById('mobile-nav-bar');
@@ -1666,18 +1666,35 @@
         if (mobileNav) mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
         if (desktopNav) desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
 
+        let lastScrollY = 0;
+        const scrollTolerance = 25;
+
         ScrollTrigger.create({
-            start: 'top -50',
+            start: 'top -100',
             onUpdate: (self) => {
                 if (document.body.classList.contains('menu-open')) return;
 
-                if (self.direction === 1) {
+                let currentScrollY = self.scroll();
+                let scrollDiff = currentScrollY - lastScrollY;
+
+                if (currentScrollY <= 50) {
+                    if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                    if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+                    lastScrollY = currentScrollY;
+                    return;
+                }
+
+                if (Math.abs(scrollDiff) < scrollTolerance) return;
+
+                if (scrollDiff > 0) {
                     if (desktopNav) desktopNav.style.transform = 'translateY(-150%)';
                     if (mobileNav) mobileNav.style.transform = 'translateY(-150%)';
                 } else {
                     if (desktopNav) desktopNav.style.transform = 'translateY(0)';
                     if (mobileNav) mobileNav.style.transform = 'translateY(0)';
                 }
+
+                lastScrollY = currentScrollY;
             }
         });
 
