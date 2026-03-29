@@ -1473,24 +1473,25 @@
 
     <main>
         <section class="services-hero">
-            <div class="hero-content-wrapper">
+            <div class="hero-content-wrapper flex flex-col items-center w-full">
                 <h1 class="font-[Kanit] font-black uppercase w-full flex flex-col items-center relative">
                     
-                    <div class="overflow-visible w-full pb-2 z-10 relative text-center">
-                        <span class="inline-block services-glow-text text-[4rem] md:text-[6.5rem] lg:text-[8.5rem] leading-none text-white">
+                    <div class="overflow-visible w-full z-10 relative text-center">
+                        <span class="inline-block services-glow-text text-[15vw] sm:text-[4rem] md:text-[6.5rem] lg:text-[8.5rem] leading-[0.85] tracking-widest text-white">
                             OUR
                         </span>
                     </div>
                     
-                    <div class="overflow-visible w-full pt-2 z-10 relative text-center">
-                        <span class="inline-block services-glow-text text-[4rem] md:text-[6.5rem] lg:text-[8.5rem] leading-none text-concrete-orange">
+                    <div class="overflow-visible w-full z-10 relative text-center -mt-2 md:-mt-6">
+                        <span class="inline-block services-glow-text text-[15vw] sm:text-[4rem] md:text-[6.5rem] lg:text-[8.5rem] leading-[0.85] tracking-widest text-concrete-orange">
                             SERVICES
                         </span>
                     </div>
 
                 </h1>
-                <p class="hero-subtitle">
-                    Comprehensive concrete solutions tailored for architectural excellence. <br>
+                
+                <p class="hero-subtitle mt-8 md:mt-12 px-4 leading-relaxed tracking-wide">
+                    Comprehensive concrete solutions tailored for architectural excellence. <br class="hidden sm:block">
                     From residential foundations to commercial infrastructure.
                 </p>
             </div>
@@ -1658,148 +1659,176 @@
                 });
 
                 // =========================================================================
-                // 3. 3D HYPER SCROLL TUNNEL (IMMERSIVE)
+                // 3. SERVICES CARDS (3D ON PC, PURE NATIVE SCROLL ON MOBILE)
                 // =========================================================================
                 const world = document.getElementById('world');
                 const tunnelSection = document.getElementById('services-3d-tunnel');
+                const viewport = tunnelSection?.querySelector('.viewport');
 
                 if (world && tunnelSection) {
                     const servicesData = [
                         { title: "FOUNDATIONS", desc: "Structural footings & waffle pods engineered for stability.", img: "images/la2.png" },
-                        { title: "HIGHrISES", desc: "Large-scale vertical concrete pours and suspended slabs.", img: "images/la5.png" },
+                        { title: "HIGH RISES", desc: "Large-scale vertical concrete pours and suspended slabs.", img: "images/la5.png" },
                         { title: "SHED SLABS", desc: "Heavy-duty reinforced floors for industrial workshops.", img: "images/la4.png" },
                         { title: "COMMERCIAL", desc: "Civil works for retail parks, carparks, and office complexes.", img: "images/la5.png" },
                         { title: "DRIVEWAYS", desc: "Premium exposed aggregate finishes that elevate curb appeal.", img: "images/la2.png" },
                         { title: "FOOTPATHS", desc: "Public and private pedestrian paving in stipple finishes.", img: "images/la1.png" }
                     ];
 
-                    const items = [];
+                    const isMobile = window.innerWidth <= 1024;
 
-                    // MOBILE DETECTION
-                    const isMobile = window.innerWidth < 768;
-                    
-                    // THE FIX: Added more words to the text animation for mobile only
-                    const bgTexts = isMobile 
-                        ? ["STRENGTH", "PRECISION", "QUALITY", "BUILT TO LAST", "ENDURANCE", "EXPERTISE"] 
-                        : ["STRENGTH", "PRECISION", "BUILT TO LAST"];
-                    
-                    const zGap = isMobile ? 800 : 1100;
+                    if (isMobile) {
+                        // --- MOBILE: ZERO-LAG FULL-SCREEN CARDS ---
+                        
+                        // Expanded the container to use the full width
+                        tunnelSection.className = "w-full relative z-10 py-6 px-4 flex flex-col h-auto overflow-visible";
+                        if (viewport) {
+                            viewport.className = "w-full";
+                        }
+                        // Increased the gap so you clearly see one card at a time
+                        world.className = "w-full flex flex-col gap-24 pb-24";
 
-                    // 1. Generate Structural Tunnel Rings
-                    for(let i = 0; i < 30; i++) {
-                        const ring = document.createElement('div');
-                        ring.className = 'tunnel-ring';
-                        world.appendChild(ring);
-                        items.push({ el: ring, x: 0, y: 0, rot: 0, baseZ: -i * (zGap / 3), type: 'ring' });
-                    }
+                        servicesData.forEach((data, i) => {
+                            const card = document.createElement('div');
+                            
+                            // Full-height mobile card with a more app-like radius
+                            card.className = "relative w-full h-[85vh] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#050505] flex flex-col justify-end";
+                            
+                            card.innerHTML = `
+                                <img src="${data.img}" alt="${data.title}" class="absolute inset-0 w-full h-full object-cover z-0 opacity-80">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 pointer-events-none"></div>
+                                <div class="relative z-20 p-8 flex flex-col items-center text-center">
+                                    <span class="text-[#ff4d00] font-[Outfit] font-extrabold tracking-widest text-[12px] mb-3 block">0${i+1} // SERVICE</span>
+                                    <h2 class="font-[Kanit] font-black text-white text-[3.5rem] leading-[0.9] mb-4 uppercase drop-shadow-lg">${data.title}</h2>
+                                    <p class="font-[Outfit] text-white/80 text-[1.1rem] max-w-[90%]">${data.desc}</p>
+                                </div>
+                            `;
+                            world.appendChild(card);
 
-                    // 2. Generate Data Elements (Cards & Text)
-                    servicesData.forEach((data, i) => {
-                        // Giant Background Text 
-                        if (i % 2 === 0) {
-                            const textEl = document.createElement('div');
-                            textEl.className = 'tunnel-item tunnel-big-text';
-                            textEl.innerText = bgTexts[(i / 2) % bgTexts.length];
-                            world.appendChild(textEl);
-                            items.push({ el: textEl, x: 0, y: 0, rot: (Math.random() - 0.5) * 8, baseZ: -(i * zGap) - (zGap / 2), type: 'text' });
+                            // Instant-trigger fade as soon as the card peeks into view.
+                            gsap.from(card, {
+                                scrollTrigger: {
+                                    trigger: card,
+                                    start: "top 95%",
+                                    toggleActions: "play none none reverse"
+                                },
+                                y: 30,
+                                opacity: 0,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                        });
+
+                    } else {
+                        // --- PC: 3D HYPER SCROLL TUNNEL ---
+                        const items = [];
+                        const bgTexts = ["STRENGTH", "PRECISION", "BUILT TO LAST"];
+                        const zGap = 1100;
+
+                        // 1. Generate Structural Tunnel Rings
+                        for(let i = 0; i < 30; i++) {
+                            const ring = document.createElement('div');
+                            ring.className = 'tunnel-ring';
+                            world.appendChild(ring);
+                            items.push({ el: ring, x: 0, y: 0, rot: 0, baseZ: -i * (zGap / 3), type: 'ring' });
                         }
 
-                        // Service Card
-                        const cardWrapper = document.createElement('div');
-                        cardWrapper.className = 'tunnel-item pointer-events-none';
-                        
-                        const isLeft = i % 2 === 0;
-                        cardWrapper.innerHTML = `
-                            <div class="tunnel-card">
-                                <img src="${data.img}" alt="${data.title}">
-                                <div class="tunnel-overlay"></div>
-                                <div class="tunnel-info">
-                                    <div class="tunnel-text-content">
-                                        <span style="color: #ff4d00; font-family: 'Outfit'; font-weight: 800; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.3rem; display: block;">0${i+1} // SERVICE</span>
-                                        <h2 style="font-family: 'Kanit'; font-weight: 900; color: white; line-height: 0.95; margin-bottom: 0.3rem; text-transform: uppercase;">${data.title}</h2>
-                                        <p style="font-family: 'Outfit'; color: rgba(255,255,255,0.85);">${data.desc}</p>
+                        // 2. Generate Data Elements (Cards & Text)
+                        servicesData.forEach((data, i) => {
+                            if (i % 2 === 0) {
+                                const textEl = document.createElement('div');
+                                textEl.className = 'tunnel-item tunnel-big-text';
+                                textEl.innerText = bgTexts[(i / 2) % bgTexts.length];
+                                world.appendChild(textEl);
+                                items.push({ el: textEl, x: 0, y: 0, rot: (Math.random() - 0.5) * 8, baseZ: -(i * zGap) - (zGap / 2), type: 'text' });
+                            }
+
+                            const cardWrapper = document.createElement('div');
+                            cardWrapper.className = 'tunnel-item pointer-events-none';
+                            
+                            const isLeft = i % 2 === 0;
+                            cardWrapper.innerHTML = `
+                                <div class="tunnel-card">
+                                    <img src="${data.img}" alt="${data.title}">
+                                    <div class="tunnel-overlay"></div>
+                                    <div class="tunnel-info">
+                                        <div class="tunnel-text-content">
+                                            <span style="color: #ff4d00; font-family: 'Outfit'; font-weight: 800; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.3rem; display: block;">0${i+1} // SERVICE</span>
+                                            <h2 style="font-family: 'Kanit'; font-weight: 900; color: white; line-height: 0.95; margin-bottom: 0.3rem; text-transform: uppercase;">${data.title}</h2>
+                                            <p style="font-family: 'Outfit'; color: rgba(255,255,255,0.85);">${data.desc}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
-                        world.appendChild(cardWrapper);
+                            `;
+                            world.appendChild(cardWrapper);
 
-                        // Responsive math: tighter tunnel on mobile, significantly wider on desktop to accommodate massive cards.
-                        const xBaseOffset = isMobile ? 120 : 700;
-                        const xOffset = isLeft ? -xBaseOffset : xBaseOffset;
-                        const yOffset = (Math.random() - 0.5) * (isMobile ? 40 : 80);
-                        const rotY = isLeft ? (isMobile ? 15 : 25) : (isMobile ? -15 : -25);
-                        const rotZ = isLeft ? -2 : 2;
+                            const xBaseOffset = 700;
+                            const xOffset = isLeft ? -xBaseOffset : xBaseOffset;
+                            const yOffset = (Math.random() - 0.5) * 80;
+                            const rotY = isLeft ? 25 : -25;
+                            const rotZ = isLeft ? -2 : 2;
 
-                        items.push({ el: cardWrapper, x: xOffset, y: yOffset, rotZ: rotZ, rotY: rotY, baseZ: -i * zGap, type: 'card' });
-                    });
+                            items.push({ el: cardWrapper, x: xOffset, y: yOffset, rotZ: rotZ, rotY: rotY, baseZ: -i * zGap, type: 'card' });
+                        });
 
-                    // =========================================================================
-                    // 4. Map GSAP Scroll to 3D Camera Movement (UNIVERSAL)
-                    // =========================================================================
-                    let targetCameraZ = 0;
-                    const maxDistance = (servicesData.length - 1) * zGap;
+                        let targetCameraZ = 0;
+                        const maxDistance = (servicesData.length - 1) * zGap;
 
-                    // Lower scroll distance on mobile so the full tunnel clears with less thumb travel.
-                    const scrollSpeed = isMobile ? "+=1800" : "+=4500";
-
-                    ScrollTrigger.create({
-                        trigger: tunnelSection,
-                        start: "top top",
-                        end: scrollSpeed,
-                        pin: true,
-                        scrub: 1,
-                        onUpdate: (self) => {
-                            targetCameraZ = self.progress * maxDistance;
-                        }
-                    });
-
-                    // =========================================================================
-                    // 5. Render Loop (UNIVERSAL)
-                    // =========================================================================
-                    let currentCameraZ = 0;
-                    gsap.ticker.add(() => {
-                        currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
-
-                        items.forEach((item) => {
-                            const relZ = item.baseZ + currentCameraZ;
-                            let opacity = 1;
-
-                            if (relZ > 400) opacity = 0;
-                            else if (relZ > 0) opacity = 1 - (relZ / 400);
-                            else if (relZ < -4500) opacity = 0;
-                            else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
-
-                            item.el.style.opacity = opacity;
-
-                            if (opacity > 0) {
-                                let currentX = item.x;
-                                let currentY = item.y;
-                                let currentRotY = item.rotY || 0;
-                                let currentRotZ = item.rotZ || 0;
-
-                                if (item.type === 'card') {
-                                    let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
-                                    let ease = sweepProgress * (2 - sweepProgress);
-
-                                    currentX = item.x * (1 - ease);
-                                    currentY = item.y * (1 - ease);
-                                    currentRotY = item.rotY * (1 - ease);
-                                    currentRotZ = item.rotZ * (1 - ease);
-                                }
-
-                                let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
-
-                                if (item.type === 'card') {
-                                    transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
-                                } else if (item.type === 'text') {
-                                    transform += ` rotateZ(${item.rot}deg)`;
-                                }
-
-                                item.el.style.transform = transform;
+                        ScrollTrigger.create({
+                            trigger: tunnelSection,
+                            start: "top top",
+                            end: "+=4500",
+                            pin: true,
+                            scrub: 1,
+                            onUpdate: (self) => {
+                                targetCameraZ = self.progress * maxDistance;
                             }
                         });
-                    });
+
+                        let currentCameraZ = 0;
+                        gsap.ticker.add(() => {
+                            currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
+
+                            items.forEach((item) => {
+                                const relZ = item.baseZ + currentCameraZ;
+                                let opacity = 1;
+
+                                if (relZ > 400) opacity = 0;
+                                else if (relZ > 0) opacity = 1 - (relZ / 400);
+                                else if (relZ < -4500) opacity = 0;
+                                else if (relZ < -2500) opacity = (relZ + 4500) / 2000;
+
+                                item.el.style.opacity = opacity;
+
+                                if (opacity > 0) {
+                                    let currentX = item.x;
+                                    let currentY = item.y;
+                                    let currentRotY = item.rotY || 0;
+                                    let currentRotZ = item.rotZ || 0;
+
+                                    if (item.type === 'card') {
+                                        let sweepProgress = Math.max(0, Math.min(1, (relZ + 2500) / 2500));
+                                        let ease = sweepProgress * (2 - sweepProgress);
+
+                                        currentX = item.x * (1 - ease);
+                                        currentY = item.y * (1 - ease);
+                                        currentRotY = item.rotY * (1 - ease);
+                                        currentRotZ = item.rotZ * (1 - ease);
+                                    }
+
+                                    let transform = `translate3d(${currentX}px, ${currentY}px, ${relZ}px)`;
+
+                                    if (item.type === 'card') {
+                                        transform += ` rotateY(${currentRotY}deg) rotateZ(${currentRotZ}deg)`;
+                                    } else if (item.type === 'text') {
+                                        transform += ` rotateZ(${item.rot}deg)`;
+                                    }
+
+                                    item.el.style.transform = transform;
+                                }
+                            });
+                        });
+                    }
                 }
 
                 // =========================================================================
