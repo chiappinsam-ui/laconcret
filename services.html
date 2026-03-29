@@ -1942,38 +1942,27 @@
         });
 
                 // =========================================================================
-                // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
+                // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP (GSAP SYNCED)
                 // =========================================================================
                 const desktopNav = document.getElementById('pill-nav-container');
                 const mobileNav = document.getElementById('mobile-nav-bar');
-                let lastNavScrollY = window.scrollY;
 
-                if (mobileNav) {
-                    mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
-                }
-                if (desktopNav) {
-                    desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
-                }
+                if (mobileNav) mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+                if (desktopNav) desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
 
-                window.addEventListener('scroll', () => {
-                    const currentScrollY = window.scrollY;
+                ScrollTrigger.create({
+                    start: 'top -50',
+                    onUpdate: (self) => {
+                        if (document.body.classList.contains('menu-open')) return;
 
-                    if (document.body.classList.contains('menu-open') || currentScrollY <= 50) {
-                        if (desktopNav) desktopNav.style.transform = 'translateY(0)';
-                        if (mobileNav) mobileNav.style.transform = 'translateY(0)';
-                        lastNavScrollY = currentScrollY;
-                        return;
+                        if (self.direction === 1) {
+                            if (desktopNav) desktopNav.style.transform = 'translateY(-150%)';
+                            if (mobileNav) mobileNav.style.transform = 'translateY(-150%)';
+                        } else {
+                            if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                            if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+                        }
                     }
-
-                    if (currentScrollY > lastNavScrollY) {
-                        if (desktopNav) desktopNav.style.transform = 'translateY(-100%)';
-                        if (mobileNav) mobileNav.style.transform = 'translateY(-100%)';
-                    } else {
-                        if (desktopNav) desktopNav.style.transform = 'translateY(0)';
-                        if (mobileNav) mobileNav.style.transform = 'translateY(0)';
-                    }
-
-                    lastNavScrollY = currentScrollY;
                 });
 
                 // =========================================================================
