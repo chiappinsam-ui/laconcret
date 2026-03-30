@@ -1658,44 +1658,55 @@
         });
 
         // =========================================================================
-        // SMART NAVBAR: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP (WITH TOLERANCE)
+        // INTENT-BASED NAVBAR (NO MORE PEEK-A-BOO)
         // =========================================================================
         const desktopNav = document.getElementById('pill-nav-container');
         const mobileNav = document.getElementById('mobile-nav-bar');
 
-        if (mobileNav) mobileNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
-        if (desktopNav) desktopNav.classList.add('transition-transform', 'duration-300', 'ease-in-out');
+        if (mobileNav) mobileNav.classList.add('transition-transform', 'duration-500', 'ease-out');
+        if (desktopNav) desktopNav.classList.add('transition-transform', 'duration-500', 'ease-out');
 
-        let lastScrollY = 0;
-        const scrollTolerance = 25;
+        let lastScrollY = window.scrollY;
+        let upScrollAccumulator = 0;
+        let downScrollAccumulator = 0;
 
-        ScrollTrigger.create({
-            start: 'top -100',
-            onUpdate: (self) => {
-                if (document.body.classList.contains('menu-open')) return;
+        const REQUIRED_UP_SCROLL = 150;
+        const REQUIRED_DOWN_SCROLL = 30;
 
-                let currentScrollY = self.scroll();
-                let scrollDiff = currentScrollY - lastScrollY;
+        window.addEventListener('scroll', () => {
+            if (document.body.classList.contains('menu-open')) return;
 
-                if (currentScrollY <= 50) {
-                    if (desktopNav) desktopNav.style.transform = 'translateY(0)';
-                    if (mobileNav) mobileNav.style.transform = 'translateY(0)';
-                    lastScrollY = currentScrollY;
-                    return;
-                }
+            let currentScrollY = window.scrollY;
+            let diff = currentScrollY - lastScrollY;
 
-                if (Math.abs(scrollDiff) < scrollTolerance) return;
+            if (currentScrollY <= 100) {
+                if (desktopNav) desktopNav.style.transform = 'translateY(0)';
+                if (mobileNav) mobileNav.style.transform = 'translateY(0)';
+                upScrollAccumulator = 0;
+                downScrollAccumulator = 0;
+                lastScrollY = currentScrollY;
+                return;
+            }
 
-                if (scrollDiff > 0) {
+            if (diff > 0) {
+                downScrollAccumulator += diff;
+                upScrollAccumulator = 0;
+
+                if (downScrollAccumulator > REQUIRED_DOWN_SCROLL) {
                     if (desktopNav) desktopNav.style.transform = 'translateY(-150%)';
                     if (mobileNav) mobileNav.style.transform = 'translateY(-150%)';
-                } else {
+                }
+            } else if (diff < 0) {
+                upScrollAccumulator += Math.abs(diff);
+                downScrollAccumulator = 0;
+
+                if (upScrollAccumulator > REQUIRED_UP_SCROLL) {
                     if (desktopNav) desktopNav.style.transform = 'translateY(0)';
                     if (mobileNav) mobileNav.style.transform = 'translateY(0)';
                 }
-
-                lastScrollY = currentScrollY;
             }
+
+            lastScrollY = currentScrollY;
         });
 
         // =========================================================================
