@@ -303,22 +303,44 @@
                 flex: 1; /* Ensures they balance nicely side-by-side */
             }
 
-            /* --- FOOTER COMPACTION FIX --- */
+            /* --- THE REAL MOBILE SQUEEZE --- */
 
-            /* 1. Slices the gap above the copyright bar in half */
-            #animated-footer {
-                padding-bottom: 1.5rem !important;
-            }
-
-            /* 2. Tightens the gap between the divider line and the Email/Call text */
+            /* 1. Stack Email and Phone vertically so they stop crushing each other */
             #animated-footer .border-t.border-white\/10 {
-                padding-top: 1rem !important;
-                margin-top: 0.5rem !important; /* Pulls it closer to the stat grid above */
+                flex-direction: column !important;
+                gap: 1rem !important;
+                padding-top: 1.25rem !important;
+                margin-top: 0 !important;
             }
 
-            /* 3. Slims down the actual solid black copyright bar */
+            /* 2. Shrink the giant stat numbers and card padding */
+            .footer-stat-card {
+                padding: 0.75rem 0.5rem !important;
+            }
+
+            .stat-number {
+                font-size: 2rem !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* 3. Kill the massive gap between the 'CONTACT US' button and the cards */
+            #animated-footer > div.relative.z-20 {
+                gap: 2rem !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* 4. Pull the bottom of the footer up tight */
+            #animated-footer {
+                padding-bottom: 0 !important;
+            }
+
+            /* 5. Razor-thin copyright bar */
             .site-footer {
                 padding: 0.5rem 0 !important;
+            }
+
+            .site-footer .footer-copyright p {
+                font-size: 0.55rem !important;
             }
         }
         body {

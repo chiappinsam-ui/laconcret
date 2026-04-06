@@ -922,8 +922,32 @@
             .stat-box .number { font-size: 2.2rem !important; margin-bottom: 0.25rem !important; }
             .stat-box .label { font-size: 0.75rem !important; }
 
-            /* 6. Give the divider room to breathe between the two slides */
-            .divider-line { margin: 3rem 0 !important; opacity: 0.3; }
+            /* --- ULTRA COMPACT FOOTER FIX --- */
+
+            /* 1. Pull the bottom of the main footer section up tight */
+            .parallax-extension {
+                padding-bottom: 0.5rem !important;
+            }
+
+            /* 2. Tighten the divider and the Email / Call Us spacing */
+            .divider-line {
+                margin: 1rem 0 !important;
+                opacity: 0.3;
+            }
+
+            .contact-details {
+                gap: 0.5rem !important;
+            }
+
+            /* 3. Shrink the copyright bar to a razor-thin strip */
+            .site-footer {
+                padding: 0.25rem 0 !important;
+            }
+
+            /* 4. Drop the copyright text size so it fits the thinner bar */
+            .site-footer .footer-copyright p {
+                font-size: 0.5rem !important;
+            }
         }
     </style>
     <style>
@@ -1731,4 +1755,3 @@
     </script>
 </body>
 </html>
-
