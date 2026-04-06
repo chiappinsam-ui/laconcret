@@ -303,45 +303,6 @@
                 flex: 1; /* Ensures they balance nicely side-by-side */
             }
 
-            /* --- THE REAL MOBILE SQUEEZE --- */
-
-            /* 1. Stack Email and Phone vertically so they stop crushing each other */
-            #animated-footer .border-t.border-white\/10 {
-                flex-direction: column !important;
-                gap: 1rem !important;
-                padding-top: 1.25rem !important;
-                margin-top: 0 !important;
-            }
-
-            /* 2. Shrink the giant stat numbers and card padding */
-            .footer-stat-card {
-                padding: 0.75rem 0.5rem !important;
-            }
-
-            .stat-number {
-                font-size: 2rem !important;
-                margin-bottom: 0 !important;
-            }
-
-            /* 3. Kill the massive gap between the 'CONTACT US' button and the cards */
-            #animated-footer > div.relative.z-20 {
-                gap: 2rem !important;
-                margin-bottom: 0 !important;
-            }
-
-            /* 4. Pull the bottom of the footer up tight */
-            #animated-footer {
-                padding-bottom: 0 !important;
-            }
-
-            /* 5. Razor-thin copyright bar */
-            .site-footer {
-                padding: 0.5rem 0 !important;
-            }
-
-            .site-footer .footer-copyright p {
-                font-size: 0.55rem !important;
-            }
         }
         body {
             background-color: var(--bg-main);
@@ -1564,20 +1525,19 @@
         </div>
     </section>
 
-<footer id="animated-footer" class="relative w-full min-h-[100dvh] pt-32 pb-12 flex flex-col justify-center overflow-hidden border-t border-white/5">
+<footer id="animated-footer" class="relative w-full h-auto md:min-h-screen pt-12 pb-6 md:pt-32 md:pb-12 flex flex-col justify-center overflow-hidden border-t border-white/5">
     
-    <div class="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 flex flex-col lg:flex-row items-center justify-between gap-16 mb-24 mt-auto">
+    <div class="relative z-20 w-full max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 mb-4 md:mb-24 mt-auto">
         
-        <div class="w-full lg:w-1/2 flex flex-col items-start text-left">
-            
-            <div class="footer-anim-left inline-block border border-white/20 rounded-full px-5 py-2 mb-8 backdrop-blur-sm bg-white/5">
-                <span class="font-[Outfit] text-white/80 text-xs font-semibold tracking-[0.2em] uppercase">Ready to Pour</span>
+        <div class="w-full lg:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
+            <div class="footer-anim-left inline-block border border-white/20 rounded-full px-5 py-2 mb-4 md:mb-8 backdrop-blur-sm bg-white/5">
+                <span class="font-[Outfit] text-white/80 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Ready to Pour</span>
             </div>
 
-            <h2 class="footer-anim-left font-[Kanit] font-black text-6xl md:text-8xl text-white uppercase leading-[0.9] tracking-tight mb-6">
+            <h2 class="footer-anim-left font-[Kanit] font-black text-5xl md:text-8xl text-white uppercase leading-[0.9] tracking-tight mb-4 md:mb-6">
                 BUILT TO<br>LAST.
             </h2>
-            <p class="footer-anim-left font-[Outfit] text-white/70 text-lg max-w-md leading-relaxed mb-10">
+            <p class="footer-anim-left font-[Outfit] text-white/70 text-sm md:text-lg max-w-md leading-relaxed mb-6 md:mb-10">
                 Our commitment to quality ensures that every pour stands the test of time. From residential slabs to large-scale commercial infrastructure.
             </p>
             
@@ -1586,35 +1546,35 @@
             </a>
         </div>
 
-        <div class="w-full lg:w-1/2 flex flex-col gap-8">
+        <div class="w-full lg:w-1/2 flex flex-col gap-6 md:gap-8 mt-8 md:mt-0">
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                <div class="footer-anim-card footer-stat-card">
-                    <span class="stat-number font-[Kanit] font-black text-4xl md:text-5xl text-white mb-2">10,000+</span>
-                    <span class="font-[Outfit] text-white/50 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Projects Completed</span>
+            <div class="grid grid-cols-2 gap-3 md:gap-6">
+                <div class="footer-anim-card footer-stat-card py-4 px-2 md:py-10 md:px-6">
+                    <span class="stat-number font-[Kanit] font-black text-3xl md:text-5xl text-white mb-1">10,000+</span>
+                    <span class="font-[Outfit] text-white/50 text-[0.6rem] md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Projects Completed</span>
                 </div>
-                <div class="footer-anim-card footer-stat-card">
-                    <span class="stat-number font-[Kanit] font-black text-4xl md:text-5xl text-white mb-2">35+</span>
-                    <span class="font-[Outfit] text-white/50 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Years Experience</span>
+                <div class="footer-anim-card footer-stat-card py-4 px-2 md:py-10 md:px-6">
+                    <span class="stat-number font-[Kanit] font-black text-3xl md:text-5xl text-white mb-1">35+</span>
+                    <span class="font-[Outfit] text-white/50 text-[0.6rem] md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Years Experience</span>
                 </div>
-                <div class="footer-anim-card footer-stat-card">
-                    <span class="stat-number font-[Kanit] font-black text-4xl md:text-5xl text-white mb-2">8+</span>
-                    <span class="font-[Outfit] text-white/50 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Staff Members</span>
+                <div class="footer-anim-card footer-stat-card py-4 px-2 md:py-10 md:px-6">
+                    <span class="stat-number font-[Kanit] font-black text-3xl md:text-5xl text-white mb-1">8+</span>
+                    <span class="font-[Outfit] text-white/50 text-[0.6rem] md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Staff Members</span>
                 </div>
-                <div class="footer-anim-card footer-stat-card">
-                    <span class="stat-number font-[Kanit] font-black text-4xl md:text-5xl text-white mb-2">77+</span>
-                    <span class="font-[Outfit] text-white/50 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Suburbs in SA</span>
+                <div class="footer-anim-card footer-stat-card py-4 px-2 md:py-10 md:px-6">
+                    <span class="stat-number font-[Kanit] font-black text-3xl md:text-5xl text-white mb-1">77+</span>
+                    <span class="font-[Outfit] text-white/50 text-[0.6rem] md:text-sm font-semibold tracking-[0.15em] uppercase text-center">Suburbs in SA</span>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 pt-6 border-t border-white/10">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16 pt-4 md:pt-6 border-t border-white/10 w-full text-center">
                 <div class="footer-anim-card">
-                    <span class="block font-[Outfit] text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Email Us</span>
-                    <a href="mailto:admin@laconcrete.com.au" class="font-[Outfit] text-white hover:text-concrete-orange transition-colors text-base font-semibold tracking-wide">admin@laconcrete.com.au</a>
+                    <span class="block font-[Outfit] text-white/40 text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Email Us</span>
+                    <a href="mailto:admin@laconcrete.com.au" class="font-[Outfit] text-white hover:text-concrete-orange transition-colors text-sm md:text-base font-semibold tracking-wide">admin@laconcrete.com.au</a>
                 </div>
                 <div class="footer-anim-card">
-                    <span class="block font-[Outfit] text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Call Us</span>
-                    <a href="tel:0882345678" class="font-[Outfit] text-white hover:text-concrete-orange transition-colors text-base font-semibold tracking-wide">(08) 8234 5678</a>
+                    <span class="block font-[Outfit] text-white/40 text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase mb-1">Call Us</span>
+                    <a href="tel:0882345678" class="font-[Outfit] text-white hover:text-concrete-orange transition-colors text-sm md:text-base font-semibold tracking-wide">(08) 8234 5678</a>
                 </div>
             </div>
 
